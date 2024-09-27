@@ -1,4 +1,4 @@
-name: Deploy to Compute Engine
+name: Desplegar en Google Compute Engine
 
 on:
   push:
@@ -8,19 +8,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout del repositorio
+      uses: actions/checkout@v3
+    
+    - name: Autenticar en Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-      - name: Setup Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+    - name: Configurar SDK de Google Cloud
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        install_components: 'compute'
 
-        with:
-          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+    - name: Verificar contenido del directorio local
+      run: |
+        pwd
+        ls -la
 
-      - name: Deploy to Compute Engine
-        run: |
-          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
-          gcloud compute ssh ${{ secrets.GCE_INSTANCE_NAME }} --zone=${{ secrets.GCE_ZONE }} --command="cd /home/diego_arcila/proyecto && git pull"
+    - name: Copiar archivos a la instancia de GCE
+      run: |
+        gcloud compute scp --recurse /home/runner/work/cm-eventos/cm-eventos diego_arcila@test-senior:/home/diego_arcila/proyectos --zone=us-central1-a
