@@ -31,4 +31,4 @@ jobs:
 
     - name: Copiar archivos a la instancia de GCE
       run: |
-        gcloud compute scp --recurse /home/runner/work/cm-eventos/cm-eventos diego_arcila@test-senior:/home/diego_arcila/proyectos --zone=us-central1-a
+        gcloud compute scp --recurse /home/runner/work/gestion-eventos/gestion-eventos diego_arcila@test-senior:/home/diego_arcila/proyectos --zone=us-central1-a
