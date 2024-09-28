@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TYPES = void 0;
+exports.TYPES = {
+    Firestore: Symbol.for('Firestore'),
+    FirestoreExampleRepository: Symbol.for('FirestoreExampleRepository'),
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHlwZXMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvY29uZmlndXJhdGlvbi9UeXBlcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBYSxRQUFBLEtBQUssR0FBRztJQUNqQixTQUFTLEVBQUUsTUFBTSxDQUFDLEdBQUcsQ0FBQyxXQUFXLENBQUM7SUFDbEMsMEJBQTBCLEVBQUUsTUFBTSxDQUFDLEdBQUcsQ0FBQyw0QkFBNEIsQ0FBQztDQUN2RSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IFRZUEVTID0ge1xuICAgIEZpcmVzdG9yZTogU3ltYm9sLmZvcignRmlyZXN0b3JlJyksXG4gICAgRmlyZXN0b3JlRXhhbXBsZVJlcG9zaXRvcnk6IFN5bWJvbC5mb3IoJ0ZpcmVzdG9yZUV4YW1wbGVSZXBvc2l0b3J5JyksXG59O1xuIl19

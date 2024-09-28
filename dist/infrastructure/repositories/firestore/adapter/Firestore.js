@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.firestore = void 0;
+require("reflect-metadata");
+const firestore_1 = require("@google-cloud/firestore");
+const _util_1 = require("@util");
+exports.firestore = new firestore_1.Firestore({ projectId: _util_1.GCP_PROJECT });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRmlyZXN0b3JlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vc3JjL2luZnJhc3RydWN0dXJlL3JlcG9zaXRvcmllcy9maXJlc3RvcmUvYWRhcHRlci9GaXJlc3RvcmUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNEJBQTBCO0FBQzFCLHVEQUFvRDtBQUNwRCxpQ0FBb0M7QUFFdkIsUUFBQSxTQUFTLEdBQUcsSUFBSSxxQkFBUyxDQUFDLEVBQUUsU0FBUyxFQUFFLG1CQUFXLEVBQUUsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICdyZWZsZWN0LW1ldGFkYXRhJztcbmltcG9ydCB7IEZpcmVzdG9yZSB9IGZyb20gJ0Bnb29nbGUtY2xvdWQvZmlyZXN0b3JlJztcbmltcG9ydCB7IEdDUF9QUk9KRUNUIH0gZnJvbSAnQHV0aWwnO1xuXG5leHBvcnQgY29uc3QgZmlyZXN0b3JlID0gbmV3IEZpcmVzdG9yZSh7IHByb2plY3RJZDogR0NQX1BST0pFQ1QgfSk7XG4iXX0=

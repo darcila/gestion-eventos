@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.calculateNameLength = void 0;
+const calculateNameLength = (name) => {
+    return name.length;
+};
+exports.calculateNameLength = calculateNameLength;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRXhhbXBsZURvbWFpblNlcnZpY2UuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvZG9tYWluL3NlcnZpY2VzL0V4YW1wbGVEb21haW5TZXJ2aWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFPLE1BQU0sbUJBQW1CLEdBQUcsQ0FBQyxJQUFZLEVBQVUsRUFBRTtJQUN4RCxPQUFPLElBQUksQ0FBQyxNQUFNLENBQUM7QUFDdkIsQ0FBQyxDQUFDO0FBRlcsUUFBQSxtQkFBbUIsdUJBRTlCIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IGNhbGN1bGF0ZU5hbWVMZW5ndGggPSAobmFtZTogc3RyaW5nKTogbnVtYmVyID0+IHtcbiAgICByZXR1cm4gbmFtZS5sZW5ndGg7XG59O1xuIl19

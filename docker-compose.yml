@@ -1,0 +1,40 @@
+version: '3.8' # Usamos una versión reciente de Docker Compose
+
+services:
+#  nodejs: # Tu servicio Node.js existente
+#    build: . # Construye la imagen desde el Dockerfile actual
+#    image: my-nodejs-app:latest # Asigna un nombre a la imagen para futuras referencias
+#    working_dir: /root/
+#    environment:
+#      - NODE_ENV=production # Asegúrate de que Node.js esté en modo producción
+#    ports:
+#      - 3000:3000 # Expone el puerto 3000 de tu aplicación
+#    depends_on: # Espera a que estos servicios estén listos antes de iniciar
+#      - postgres
+#      - redis
+#      - rabbitmq
+
+  postgres:
+    image: postgres:latest # Usa la imagen oficial de PostgreSQL
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Monta un volumen externo para los datos
+    environment:
+      - POSTGRES_USER=darcila # Configura tu usuario de PostgreSQL
+      - POSTGRES_PASSWORD=darcila # Configura tu contraseña
+      - POSTGRES_DB=eventos # Configura el nombre de tu base de datos
+    ports:
+      - 5432:5432 # Expone el puerto 5432 de PostgreSQL
+
+  redis:
+    image: redis:latest # Usa la imagen oficial de Redis
+    ports:
+      - 6379:6379 # Expone el puerto 6379 de Redis
+
+  rabbitmq:
+    image: rabbitmq:3-management # Usa la imagen oficial de RabbitMQ con la interfaz de gestión
+    ports:
+      - 5672:5672 # Puerto para la conexión AMQP
+      - 15672:15672 # Puerto para la interfaz de gestión
+
+volumes:
+  postgres-data: # Define el volumen externo para PostgreSQL
