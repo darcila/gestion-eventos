@@ -1,1 +1,2 @@
-export * from './ExampleDomainService';
+export * from './DireccionDomainService';
+export * from './CorreoDomainService';

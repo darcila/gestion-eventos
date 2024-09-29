@@ -1,5 +1,5 @@
-import { IResponseApiClient } from '@domain/response';
+import {Geometry} from "@domain/entities/MapEntity";
 
 export interface MapApiClientRepository {
-    getByDireccion(address: string): Promise<IResponseApiClient<string>>;
+    getByDireccion(direccion: string): Promise<Geometry[] | null>;
 }

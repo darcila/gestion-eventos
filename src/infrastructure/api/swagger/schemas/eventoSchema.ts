@@ -1,53 +1,8 @@
 import {FastifySchema} from "fastify";
 
-export const examplePostSchema = {
-    schema: {
-        description: 'post some data',
-        tags: ['post_example_template'],
-        body: {
-            type: 'object',
-            properties: {
-                equipo: { type: 'string', example: '10' },
-                numero_entrega: { type: 'number', example: 3 },
-                estado: { type: 'boolean', example: true },
-                cliente: {
-                    type: 'object',
-                    properties: {
-                        nit: { type: 'string', example: '900358833' },
-                        razon_social: { type: 'string', example: null },
-                        div: { type: 'string', example: '03' },
-                    },
-                },
-            },
-        },
-        response: {
-            '200-OK': {
-                description: 'Succesful response',
-                type: 'object',
-                properties: {
-                    isError: { type: 'boolean', example: false },
-                    data: { type: 'object', properties: { id: { type: 'string', example: 'f53nMjS5pC3naOdjonwS' } } },
-                    timestamp: { type: 'string', format: 'date-time', example: '2030-07-21T17:32:28Z' },
-                },
-            },
-            '400-BAD_REQUEST': {
-                description: 'Bad Request',
-                type: 'object',
-                properties: {
-                    isError: { type: 'boolean', example: true },
-                    message: { type: 'string', example: 'example is required' },
-                    code: { type: 'string', example: 'BAD_REQUEST' },
-                    statusCode: { type: 'number', example: 400 },
-                    cause: { type: ['string', 'null'], example: 'Error: example is required' },
-                },
-            },
-        },
-    },
-};
-
 export const eventoGetSchema: FastifySchema = {
     description: 'Obtener un evento',
-    tags: ['get_evento'],
+    tags: ['Evento'],
     params: {
         type: 'object',
         properties: {
@@ -61,10 +16,19 @@ export const eventoGetSchema: FastifySchema = {
             type: 'object',
             properties: {
                 isError: { type: 'boolean' },
+                id: { type: 'string' },
                 data: {
                     type: 'object',
                     properties: {
-                        id: { type: 'number' }
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                        descripcion: { type: 'string' },
+                        lugar: { type: 'string' },
+                        ciudad: { type: 'string' },
+                        fecha: { type: 'string', format: 'date' },
+                        hora: { type: 'string' },
+                        valor: { type: 'number' },
+                        capacidad: { type: 'number' }
                     }
                 },
                 timestamp: { type: 'string', format: 'date-time' },
@@ -82,4 +46,136 @@ export const eventoGetSchema: FastifySchema = {
             },
         },
     },
+};
+
+export const createEventoSchema: FastifySchema = {
+    description: 'Crear un evento',
+    tags: ['Evento'],
+    body: {
+        type: 'object',
+        required: ['nombre', 'descripcion', 'lugar', 'ciudad', 'fecha', 'hora'], // 'nombre' es el único campo obligatorio
+        properties: {
+            nombre: { type: 'string', maxLength: 200 },
+            descripcion: { type: 'string' },
+            lugar: { type: 'string', maxLength: 200 },
+            ciudad: { type: 'string', maxLength: 70 },
+            fecha: { type: 'string', format: 'date' },
+            hora: { type: 'string' },
+            categoria: { type: 'array' },
+            capacidad: { type: 'integer', minimum: 0 },
+            valor: { type: 'number', minimum: 0 }
+        }
+    },
+    response: {
+        200: { // Respuesta exitosa (evento creado)
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                        descripcion: { type: 'string' },
+                        lugar: { type: 'string' },
+                        ciudad: { type: 'string' },
+                        fecha: { type: 'string', format: 'date' },
+                        hora: { type: 'string' },
+                        valor: { type: 'number' },
+                        capacidad: { type: 'number' }
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: { // Error de validación
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        }
+    }
+};
+
+export const pathEventoSchema: FastifySchema = {
+    description: 'Actualizar un evento',
+    tags: ['Evento'],
+    body: { // Usamos 'querystring' para los parámetros en la URL
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'number' },
+            nombre: { type: 'string' },
+            fecha: { type: 'string', format: 'date' },
+            hora: { type: 'string', format: 'time' },
+            capacidad: { type: 'integer', minimum: 0 },
+            valor: { type: 'number', minimum: 0 }
+        }
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        404: { // Evento no encontrado
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        }
+        // ... otros códigos de respuesta de error según sea necesario
+    }
+};
+
+export const deleteEventoSchema: FastifySchema = {
+    description: 'Borrar un evento',
+    tags: ['Evento'],
+    params: { // Usamos 'params' para los parámetros en la ruta
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'integer' }
+        }
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        mensaje: { type: 'string' },
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        404: { // Evento no encontrado
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        }
+    }
 };

@@ -1,6 +1,8 @@
+import {EventoEntity} from "@domain/entities";
+
 export interface EventosRepository {
-    guardar(example: string): Promise<void>;
-    consultar(example: string): Promise<void>;
-    actualizar(example: string): Promise<void>;
-    eliminar(example: string): Promise<void>;
+    guardar(evento: EventoEntity): Promise<number>;
+    consultarPorId(id: number): Promise<EventoEntity | null>;
+    actualizar(evento: EventoEntity): Promise<number | null | undefined>;
+    eliminar(id: number): Promise<number | null | undefined>;
 }
