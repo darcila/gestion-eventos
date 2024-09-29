@@ -1,1 +1,1 @@
-export * from './ExampleApiClient';
+export * from './MapApiClient';

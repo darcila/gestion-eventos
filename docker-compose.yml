@@ -15,9 +15,10 @@ services:
 #      - rabbitmq
 
   postgres:
-    image: postgres:latest # Usa la imagen oficial de PostgreSQL
+    image: postgis/postgis:17-3.4-alpine # Usa la imagen oficial de PostgreSQL
     volumes:
       - postgres-data:/var/lib/postgresql/data # Monta un volumen externo para los datos
+      - ./scripts/restauracion.sql:/docker-entrypoint-initdb.d/restauracion.sql
     environment:
       - POSTGRES_USER=darcila # Configura tu usuario de PostgreSQL
       - POSTGRES_PASSWORD=darcila # Configura tu contraseña

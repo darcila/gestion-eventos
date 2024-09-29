@@ -1,2 +1,2 @@
-export * from './ExampleRepository';
-export * from './ExampleApiClientRepository';
+export * from './EventosRepository';
+export * from './MapApiClientRepository';

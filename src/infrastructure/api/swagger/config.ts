@@ -1,24 +1,29 @@
-import { HOST, NODE_ENV } from '@util';
-import { FastifyDynamicSwaggerOptions } from '@fastify/swagger';
-
-export const swagger_config: FastifyDynamicSwaggerOptions = {
-    //routePrefix: `${PREFIX}/docs`,
+export const swagger_config
+    = {
     swagger: {
         info: {
-            title: 'Microservice Template',
-            description: 'Este microservicio se encarga de guardar la configuración inicial Firestore',
-            version: '0.1.0',
-            contact: {
-                name: 'Coordinadora Mercantil S.A',
-                url: 'http://www.coordinadora.com/',
-                email: 'it@coordinadora.com',
-            },
+            title: 'Mi API',
+            description: 'Documentación de mi API',
+            version: '1.0.0',
         },
-        host: HOST,
-        schemes: NODE_ENV === 'local' ? ['http'] : ['https'],
+        externalDocs: {
+            url: 'https://swagger.io',
+            description: 'Encuentra más información aquí',
+        },
+        host: 'localhost:8080',
+        schemes: ['http'],
         consumes: ['application/json'],
         produces: ['application/json'],
     },
-    //exposeRoute: true,
-    hideUntagged: true,
+    exposeRoute: true, // Necesario para servir la ruta del JSON de Swagger
+};
+
+export const swaggerUi_config = {
+    routePrefix: '/docs', // Ruta donde se servirá la UI
+    uiConfig: {
+        docExpansion: 'none', // Opcional, ajusta la UI
+        deepLinking: false,
+    },
+    staticCSP: true,
+    transformStaticCSP: (header: string) => header,
 };

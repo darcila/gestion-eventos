@@ -9,4 +9,16 @@ export class EventoAppService {
         const result = EventoEntity.create(id, 'Evento');
         return Result.ok(result);
     }
+    async postEvento(): Promise<Response<EventoEntity | null>> {
+        const result = EventoEntity.create(1, 'Evento');
+        return Result.ok(result);
+    }
+    async putEvento(id: number): Promise<Response<EventoEntity | null>> {
+        const result = EventoEntity.create(id, 'Evento');
+        return Result.ok(result);
+    }
+    async deleteEvento(id: number): Promise<Response<EventoEntity | null>> {
+        const result = EventoEntity.create(id, 'Evento');
+        return Result.ok(result);
+    }
 }

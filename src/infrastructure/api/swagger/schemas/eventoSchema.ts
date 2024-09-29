@@ -1,3 +1,5 @@
+import {FastifySchema} from "fastify";
+
 export const examplePostSchema = {
     schema: {
         description: 'post some data',
@@ -43,42 +45,40 @@ export const examplePostSchema = {
     },
 };
 
-export const exampleGetSchema = {
-    schema: {
-        description: 'post some data',
-        tags: ['get_example_template'],
-        query: {
+export const eventoGetSchema: FastifySchema = {
+    description: 'Obtener un evento',
+    tags: ['get_evento'],
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'number' }, // Removemos 'example'
+        },
+        required: ['id'], // Añadimos 'required' para indicar que 'id' es obligatorio
+    },
+    response: {
+        200: { // Usamos códigos de estado numéricos en lugar de strings
+            description: 'Succesful response',
             type: 'object',
             properties: {
-                equipo: { type: 'string', example: '10' },
+                isError: { type: 'boolean' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' }
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
             },
         },
-        params: {
+        400: {
+            description: 'Bad Request',
             type: 'object',
             properties: {
-                terminal: { type: 'string', example: '1' },
-            },
-        },
-        response: {
-            '200-OK': {
-                description: 'Succesful response',
-                type: 'object',
-                properties: {
-                    isError: { type: 'boolean', example: false },
-                    data: { type: 'object', properties: { id: { type: 'string', example: 'f53nMjS5pC3naOdjonwS' } } },
-                    timestamp: { type: 'string', format: 'date-time', example: '2030-07-21T17:32:28Z' },
-                },
-            },
-            '400-BAD_REQUEST': {
-                description: 'Bad Request',
-                type: 'object',
-                properties: {
-                    isError: { type: 'boolean', example: true },
-                    message: { type: 'string', example: 'example is required' },
-                    code: { type: 'string', example: 'BAD_REQUEST' },
-                    statusCode: { type: 'number', example: 400 },
-                    cause: { type: ['string', 'null'], example: 'Error: example is required' },
-                },
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] },
             },
         },
     },
