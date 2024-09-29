@@ -31,8 +31,8 @@ export class ReservaAppService {
         return Result.ok(reservaEntity);
     }
 
-    async patchReserva(id: number, reserva: ReservaPatchParam): Promise<Response<ReservaEntity | null>> {
-        const reservaEntity = await this.reservaInfraService.actualizar(id, reserva);
+    async patchReserva(reserva: ReservaPatchParam): Promise<Response<ReservaEntity | null>> {
+        const reservaEntity = await this.reservaInfraService.actualizar(reserva);
         return Result.ok(reservaEntity);
     }
 

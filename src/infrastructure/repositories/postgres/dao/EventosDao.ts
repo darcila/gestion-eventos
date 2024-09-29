@@ -11,7 +11,7 @@ export class EventosDao implements EventosRepository {
 
     async actualizar(evento: EventoEntity): Promise<number | null | undefined> {
         try {
-            const sql = `UPDATE evento SET nombre = $1, fecha = $2, hora = $3, capacidad = $4, valor = $5 WHERE id = $6 RETURNING id`;
+            const sql = `UPDATE evento SET nombre = $1, fecha = $2, hora = $3, capacidad = $4, valor = $5, actualizado = NOW() WHERE id = $6 RETURNING id`;
             await this.db.oneOrNone<ResultadoConId>(sql, [evento.nombre, evento.fecha, evento.hora, evento.capacidad, evento.valor, evento.id]);
             return evento?.id;
         } catch (error) {

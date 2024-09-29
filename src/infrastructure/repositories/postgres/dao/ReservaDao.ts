@@ -12,7 +12,7 @@ export class ReservasDao implements ReservasRepository {
     async actualizar(reserva: ReservaEntity): Promise<number | null | undefined> {
         try {
             const sql = `UPDATE reserva 
-                         SET estado = $1 
+                         SET estado = $1, actualizado = NOW() 
                          WHERE id = $2 
                          RETURNING id`;
 

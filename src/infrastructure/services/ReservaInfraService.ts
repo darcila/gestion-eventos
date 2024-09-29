@@ -8,8 +8,8 @@ import { ReservaEntity, ReservaPatchParam } from "@domain/entities";
 export class ReservaInfraService {
     private reservasRepository = DEPENDENCY_CONTAINER.get<ReservasRepository>(TYPES.ReservasRepository);
 
-    async actualizar(id: number, reserva: ReservaPatchParam): Promise<ReservaEntity> {
-        const reservaEntity = await this.reservasRepository.consultarPorId(id);
+    async actualizar(reserva: ReservaPatchParam): Promise<ReservaEntity> {
+        const reservaEntity = await this.reservasRepository.consultarPorId(reserva.id);
         if (!reservaEntity) {
             throw new Error('Reserva no encontrada');
         }
