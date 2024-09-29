@@ -2,7 +2,7 @@ export const swagger_config
     = {
     swagger: {
         info: {
-            title: 'Mi API',
+            title: 'API de Gestion de reservas',
             description: 'Documentación de mi API',
             version: '1.0.0',
         },

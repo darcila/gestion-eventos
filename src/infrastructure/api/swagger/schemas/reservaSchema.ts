@@ -41,8 +41,15 @@ export const createReservaSchema: FastifySchema = {
                 error: { type: 'string' },
                 message: { type: 'string' }
             }
+        },
+        409: {
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
         }
-        // ... otros códigos de respuesta de error (ej: 409 para conflicto si se excede la capacidad)
     }
 };
 
@@ -90,4 +97,90 @@ export const getReservaSchema: FastifySchema = {
             },
         },
     },
+};
+
+export const updateReservaSchema: FastifySchema = {
+    description: 'Confirmar o cancelar una reserva',
+    tags: ['Reserva'],
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'number' },
+        }
+    },
+    body: {
+        type: 'object',
+        properties: {
+        estado: { type: 'string', enum: ['confirmada', 'cancelada'] }
+        }
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: { // Error de validación o problema al actualizar
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        },
+        404: { // Reserva no encontrada
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        }
+    }
+};
+
+export const deleteReservaSchema: FastifySchema = {
+    description: 'Eliminar una reserva',
+    tags: ['Reserva'],
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'number' }
+        }
+    },
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        mensaje: { type: 'string' }, // Mensaje de éxito
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        404: { // Reserva no encontrada
+            type: 'object',
+            properties: {
+                statusCode: { type: 'number' },
+                error: { type: 'string' },
+                message: { type: 'string' }
+            }
+        }
+    }
 };

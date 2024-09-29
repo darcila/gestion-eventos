@@ -3,4 +3,5 @@ export const TYPES = {
     EventosRepository: Symbol.for('EventosRepository'),
     MapRepository: Symbol.for('MapRepository'),
     AsistentesRepository: Symbol.for('AsistentesRepository'),
+    ReservasRepository: Symbol.for('ReservasRepository'),
 };

@@ -4,3 +4,6 @@ export * from './EventoResultado';
 export * from './AsistenteEntity';
 export * from './AsistenteRouteParams';
 export * from './AsistenteResultado';
+export * from './ReservaEntity';
+export * from './ReservaRouteParams';
+export * from './ReservaResultado';

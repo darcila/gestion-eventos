@@ -2,10 +2,10 @@ import {eventoDelete, eventoGet, eventoPost, eventoPatch} from './EventoRouter';
 import { FastifyInstance } from 'fastify';
 import {
     createAsistenteSchema,
-    createEventoSchema, deleteAsistenteSchema,
-    deleteEventoSchema,
-    eventoGetSchema, getAsistentePorIdentificacionSchema,
-    pathEventoSchema, updateAsistenteSchema
+    createEventoSchema, createReservaSchema, deleteAsistenteSchema,
+    deleteEventoSchema, deleteReservaSchema,
+    eventoGetSchema, getAsistentePorIdentificacionSchema, getReservaSchema,
+    pathEventoSchema, updateAsistenteSchema, updateReservaSchema
 } from "@infrastructure/api/swagger";
 import {
     asistenteDelete,
@@ -13,6 +13,7 @@ import {
     asistentePatch,
     asistentePost
 } from "@infrastructure/api/routers/AsistenteRouter";
+import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastructure/api/routers/ReservaRouter";
 
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
     const pathEvento = '/evento';
@@ -27,4 +28,11 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.post(`${pathAsistente}`, { schema: createAsistenteSchema }, asistentePost);
     application.patch(`${pathAsistente}`, { schema: updateAsistenteSchema }, asistentePatch);
     application.delete(`${pathAsistente}/:identificacion`, { schema: deleteAsistenteSchema }, asistenteDelete);
+
+    const pathReserva = '/reserva';
+
+    application.get(`${pathReserva}/:id`, { schema: getReservaSchema }, reservaGet);
+    application.post(`${pathReserva}/`, { schema: createReservaSchema }, reservaPost);
+    application.patch(`${pathReserva}/:id`, { schema: updateReservaSchema }, reservaPatch);
+    application.delete(`${pathReserva}/:id`, { schema: deleteReservaSchema }, reservaDelete);
 };
