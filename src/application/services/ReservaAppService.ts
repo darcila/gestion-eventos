@@ -8,11 +8,13 @@ import {
     ReservaRespuestaMensaje
 } from "@domain/entities"; // Asegúrate de tener estas entidades definidas
 import { DEPENDENCY_CONTAINER } from "@configuration";
-import { ReservaInfraService } from "@infrastructure/services"; // Asegúrate de tener este servicio definido
+import {AsistenteInfraService, EventoInfraService, ReservaInfraService} from "@infrastructure/services"; // Asegúrate de tener este servicio definido
 
 @injectable()
 export class ReservaAppService {
     private reservaInfraService = DEPENDENCY_CONTAINER.get(ReservaInfraService);
+    private asistenteInfraService = DEPENDENCY_CONTAINER.get(AsistenteInfraService);
+    private eventoInfraService = DEPENDENCY_CONTAINER.get(EventoInfraService);
 
     async getReserva(id: number): Promise<Response<ReservaEntity | null>> {
         const result = await this.reservaInfraService.consultar(id);
@@ -20,9 +22,10 @@ export class ReservaAppService {
     }
 
     async postReserva(reserva: ReservaPostParam): Promise<Response<ReservaEntity | null>> {
+        await this.asistenteInfraService.consultarPorId(reserva.asistente_id);
+        await this.eventoInfraService.consultar(reserva.evento_id);
         const reservaEntity = ReservaEntity.create(
             reserva.asistente_id, reserva.evento_id, reserva.cantidad_boletos
-            // Otros campos opcionales según tus necesidades (precio_total, forma_pago, etc.)
         );
         reservaEntity.id = await this.reservaInfraService.guardar(reservaEntity);
         return Result.ok(reservaEntity);

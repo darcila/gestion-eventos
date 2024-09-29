@@ -18,8 +18,8 @@ import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastruct
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
     const pathEvento = '/evento';
     application.get(`${pathEvento}/:id`, { schema: eventoGetSchema }, eventoGet);
-    application.post(`${pathEvento}/`, { schema: createEventoSchema }, eventoPost);
-    application.patch(`${pathEvento}/`, { schema: pathEventoSchema }, eventoPatch);
+    application.post(`${pathEvento}`, { schema: createEventoSchema }, eventoPost);
+    application.patch(`${pathEvento}`, { schema: pathEventoSchema }, eventoPatch);
     application.delete(`${pathEvento}/:id`, { schema: deleteEventoSchema }, eventoDelete);
 
     const pathAsistente = '/asistente';
@@ -32,7 +32,7 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     const pathReserva = '/reserva';
 
     application.get(`${pathReserva}/:id`, { schema: getReservaSchema }, reservaGet);
-    application.post(`${pathReserva}/`, { schema: createReservaSchema }, reservaPost);
-    application.patch(`${pathReserva}/:id`, { schema: updateReservaSchema }, reservaPatch);
+    application.post(`${pathReserva}`, { schema: createReservaSchema }, reservaPost);
+    application.patch(`${pathReserva}`, { schema: updateReservaSchema }, reservaPatch);
     application.delete(`${pathReserva}/:id`, { schema: deleteReservaSchema }, reservaDelete);
 };

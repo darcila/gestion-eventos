@@ -34,6 +34,16 @@ export class AsistentesDao implements AsistentesRepository {
         }
     }
 
+    async consultarPorId(id: number): Promise<AsistenteEntity | null> {
+        try {
+            const sql = `SELECT * FROM asistente WHERE id = $1`;
+            return await this.db.oneOrNone<AsistenteEntity>(sql, [id]);
+        } catch (error) {
+            console.error('Error al consultar asistente', error);
+            return null;
+        }
+    }
+
     async eliminar(identificacion: string): Promise<number | null | undefined> {
         try {
             const sql = `DELETE FROM asistente WHERE identificacion = $1 RETURNING id`;

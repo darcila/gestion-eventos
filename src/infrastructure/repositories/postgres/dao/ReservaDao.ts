@@ -12,13 +12,11 @@ export class ReservasDao implements ReservasRepository {
     async actualizar(reserva: ReservaEntity): Promise<number | null | undefined> {
         try {
             const sql = `UPDATE reserva 
-                         SET cantidad_boletos = $1, 
-                             estado = $2 
-                         WHERE id = $3 
+                         SET estado = $1 
+                         WHERE id = $2 
                          RETURNING id`;
 
             const result = await this.db.oneOrNone<ResultadoConId>(sql, [
-                reserva.cantidad_boletos,
                 reserva.estado,
                 reserva.id
             ]);
@@ -52,15 +50,14 @@ export class ReservasDao implements ReservasRepository {
 
     async guardar(reserva: ReservaEntity): Promise<number> {
         try {
-            const sql = `INSERT INTO reserva (asistente_id, evento_id, cantidad_boletos, estado) 
-                         VALUES ($1, $2, $3, $4) 
+            const sql = `INSERT INTO reserva (asistente_id, evento_id, cantidad_boletos) 
+                         VALUES ($1, $2, $3) 
                          RETURNING id`;
 
             const result = await this.db.one<ResultadoConId>(sql, [
                 reserva.asistente_id,
                 reserva.evento_id,
-                reserva.cantidad_boletos,
-                reserva.estado
+                reserva.cantidad_boletos
             ]);
             return result.id;
         } catch (error) {

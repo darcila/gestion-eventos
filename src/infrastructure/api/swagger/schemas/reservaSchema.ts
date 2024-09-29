@@ -10,7 +10,6 @@ export const createReservaSchema: FastifySchema = {
             asistente_id: { type: 'integer' },
             evento_id: { type: 'integer' },
             cantidad_boletos: { type: 'integer', minimum: 1 },
-            // Otros campos opcionales según tus necesidades (precio_total, forma_pago, etc.)
         }
     },
     response: {
@@ -28,7 +27,6 @@ export const createReservaSchema: FastifySchema = {
                         fecha_reserva: { type: 'string', format: 'date-time' },
                         cantidad_boletos: { type: 'number' },
                         estado: { type: 'string' }
-                        // Otros campos que desees devolver en la respuesta
                     }
                 },
                 timestamp: { type: 'string', format: 'date-time' },
@@ -102,16 +100,11 @@ export const getReservaSchema: FastifySchema = {
 export const updateReservaSchema: FastifySchema = {
     description: 'Confirmar o cancelar una reserva',
     tags: ['Reserva'],
-    params: {
-        type: 'object',
-        required: ['id'],
-        properties: {
-            id: { type: 'number' },
-        }
-    },
     body: {
         type: 'object',
+        required: ['id', 'estado'],
         properties: {
+        id: { type: 'number' },
         estado: { type: 'string', enum: ['confirmada', 'cancelada'] }
         }
     },

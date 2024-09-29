@@ -38,6 +38,14 @@ export class AsistenteInfraService {
         throw new Error('Error al actualizar el asistente');
     }
 
+    async consultarPorId(id: number):Promise<AsistenteEntity> {
+        const asistente = await this.asistentesRepository.consultarPorId(id);
+        if (asistente) {
+            return asistente;
+        }
+        throw new Error('Asistente no encontrado');
+    }
+
     async consultar(identificacion: string):Promise<AsistenteEntity> {
         const asistente = await this.asistentesRepository.consultarPorIdentificacion(identificacion);
         if (asistente) {
