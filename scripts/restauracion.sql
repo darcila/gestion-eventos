@@ -96,7 +96,7 @@ EXECUTE FUNCTION verificar_capacidad_evento();
 CREATE TABLE IF NOT EXISTS usuarios (
     id BIGSERIAL PRIMARY KEY,
     usuario VARCHAR(255) NOT NULL UNIQUE,
-    clave TEXT NOT NULL, -- O puedes usar TEXT si prefieres no limitar la longitud
+    clave TEXT NOT NULL,
     estado BOOLEAN NOT NULL DEFAULT TRUE,
     nombre VARCHAR(255),
     apellido VARCHAR(255),
@@ -106,7 +106,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     actualizado TIMESTAMP
 );
 
--- Índices recomendados para la tabla 'usuarios'
 CREATE INDEX idx_usuarios_usuario ON usuarios (usuario);
 CREATE INDEX idx_usuarios_correo ON usuarios (correo);
 CREATE INDEX idx_usuarios_estado ON usuarios (estado);

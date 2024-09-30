@@ -3,15 +3,25 @@ import {FastifySchema} from "fastify";
 export const eventoGetSchema: FastifySchema = {
     description: 'Obtener un evento',
     tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     params: {
         type: 'object',
         properties: {
             id: { type: 'number' }, // Removemos 'example'
         },
-        required: ['id'], // Añadimos 'required' para indicar que 'id' es obligatorio
+        required: ['id'],
     },
     response: {
-        200: { // Usamos códigos de estado numéricos en lugar de strings
+        200: {
             description: 'Succesful response',
             type: 'object',
             properties: {
@@ -51,6 +61,16 @@ export const eventoGetSchema: FastifySchema = {
 export const createEventoSchema: FastifySchema = {
     description: 'Crear un evento',
     tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     body: {
         type: 'object',
         required: ['nombre', 'descripcion', 'lugar', 'ciudad', 'fecha', 'hora'], // 'nombre' es el único campo obligatorio
@@ -103,7 +123,17 @@ export const createEventoSchema: FastifySchema = {
 export const pathEventoSchema: FastifySchema = {
     description: 'Actualizar un evento',
     tags: ['Evento'],
-    body: { // Usamos 'querystring' para los parámetros en la URL
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    body: {
         type: 'object',
         required: ['id'],
         properties: {
@@ -146,7 +176,17 @@ export const pathEventoSchema: FastifySchema = {
 export const deleteEventoSchema: FastifySchema = {
     description: 'Borrar un evento',
     tags: ['Evento'],
-    params: { // Usamos 'params' para los parámetros en la ruta
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    params: {
         type: 'object',
         required: ['id'],
         properties: {
@@ -169,7 +209,7 @@ export const deleteEventoSchema: FastifySchema = {
                 timestamp: { type: 'string', format: 'date-time' },
             },
         },
-        404: { // Evento no encontrado
+        404: {
             type: 'object',
             properties: {
                 statusCode: { type: 'number' },

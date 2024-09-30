@@ -3,6 +3,16 @@ import {FastifySchema} from "fastify";
 export const createAsistenteSchema: FastifySchema = {
     description: 'Crear un asistente',
     tags: ['Asistente'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     body: {
         type: 'object',
         required: ['identificacion', 'nombre', 'direccion', 'telefono', 'correo', 'ciudad'],
@@ -50,6 +60,16 @@ export const createAsistenteSchema: FastifySchema = {
 export const getAsistentePorIdentificacionSchema: FastifySchema = {
     description: 'Obtener un asistente por su identificación',
     tags: ['Asistente'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     params: {
         type: 'object',
         properties: {
@@ -104,6 +124,16 @@ export const getAsistentePorIdentificacionSchema: FastifySchema = {
 export const updateAsistenteSchema: FastifySchema = {
     description: 'Actualizar un asistente por su identificación',
     tags: ['Asistente'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     body: {
         type: 'object',
         required: ['identificacion'],
@@ -163,6 +193,16 @@ export const updateAsistenteSchema: FastifySchema = {
 export const deleteAsistenteSchema: FastifySchema = {
     description: 'Borrar un asistente',
     tags: ['Asistente'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     params: {
         type: 'object',
         required: ['identificacion'],

@@ -3,6 +3,16 @@ import {FastifySchema} from "fastify";
 export const createReservaSchema: FastifySchema = {
     description: 'Crear una reserva',
     tags: ['Reserva'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     body: {
         type: 'object',
         required: ['asistente_id', 'evento_id', 'cantidad_boletos'],
@@ -54,6 +64,16 @@ export const createReservaSchema: FastifySchema = {
 export const getReservaSchema: FastifySchema = {
     description: 'Obtener una reserva',
     tags: ['Reserva'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     params: {
         type: 'object',
         properties: {
@@ -100,6 +120,16 @@ export const getReservaSchema: FastifySchema = {
 export const updateReservaSchema: FastifySchema = {
     description: 'Confirmar o cancelar una reserva',
     tags: ['Reserva'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     body: {
         type: 'object',
         required: ['id', 'estado'],
@@ -145,6 +175,16 @@ export const updateReservaSchema: FastifySchema = {
 export const deleteReservaSchema: FastifySchema = {
     description: 'Eliminar una reserva',
     tags: ['Reserva'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
     params: {
         type: 'object',
         required: ['id'],

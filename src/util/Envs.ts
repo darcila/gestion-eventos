@@ -19,3 +19,6 @@ export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD || '';
 export const POSTGRES_PORT = parseInt(process.env.POSTGRES_PORT ?? '5432');
 
 export const POSTGRES_DATABASE = process.env.POSTGRES_DATABASE || '';
+
+export const KEY_JWT = process.env.KEY_JWT || '';
+

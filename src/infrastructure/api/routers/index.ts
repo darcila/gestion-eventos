@@ -1,6 +1,7 @@
 import {eventoDelete, eventoGet, eventoPost, eventoPatch} from './EventoRouter';
 import { FastifyInstance } from 'fastify';
 import {
+    autenticacionSchema, crearUsuarioSchema,
     createAsistenteSchema,
     createEventoSchema, createReservaSchema, deleteAsistenteSchema,
     deleteEventoSchema, deleteReservaSchema,
@@ -14,6 +15,7 @@ import {
     asistentePost
 } from "@infrastructure/api/routers/AsistenteRouter";
 import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastructure/api/routers/ReservaRouter";
+import {autenticar, crearUsuario} from "@infrastructure/api/routers/AutenticacionRouter";
 
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
     const pathEvento = '/evento';
@@ -35,4 +37,9 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.post(`${pathReserva}`, { schema: createReservaSchema }, reservaPost);
     application.patch(`${pathReserva}`, { schema: updateReservaSchema }, reservaPatch);
     application.delete(`${pathReserva}/:id`, { schema: deleteReservaSchema }, reservaDelete);
+
+    const pathAutenticacion = '/autenticar';
+    application.post(`${pathAutenticacion}`, { schema: autenticacionSchema } ,autenticar);
+    application.post(`${pathAutenticacion}/crear`, { schema: crearUsuarioSchema }, crearUsuario);
+
 };
