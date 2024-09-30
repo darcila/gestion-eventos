@@ -4,7 +4,7 @@ import {Response, Result} from "@domain/response";
 import {AutenticacionEntity, UsuarioEntity} from "@domain/entities";
 import {DEPENDENCY_CONTAINER, TYPES} from "@configuration";
 import {UsuariosRepository} from "@domain/repository";
-import {encryptPassword, generarToken, validatePassword} from "@domain/services";
+import {encryptPassword, generarToken, validarJWT, validatePassword} from "@domain/services";
 
 @injectable()
 export class AutenticacionAppService {
@@ -24,6 +24,23 @@ export class AutenticacionAppService {
         usuarioEntity.correo = 'admin@admin.com';
         usuarioEntity.id = await this.usuarioRepository.guardar(usuarioEntity);
         return Result.ok('ok');
+    }
+    async validarToken(token: string | undefined): Promise<boolean> {
+        if (!token) {
+            return false;
+        }
+        const usuarioJwt = validarJWT(token);
+        if (!usuarioJwt) {
+            return false;
+        }
+        const usuarioEntity = await this.usuarioRepository.consultar(usuarioJwt.usuario);
+        if (!usuarioEntity) {
+            return false;
+        }
+        if (usuarioEntity.id !== usuarioJwt.id) {
+            return false;
+        }
+        return true;
     }
     private async validarUsuario(usuario: string, clave: string): Promise<UsuarioEntity> {
         const usuarioEntity = await this.usuarioRepository.consultar(usuario);

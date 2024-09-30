@@ -1,7 +1,7 @@
 import {eventoDelete, eventoGet, eventoPost, eventoPatch} from './EventoRouter';
-import { FastifyInstance } from 'fastify';
+import {FastifyInstance, FastifyReply, FastifyRequest} from 'fastify';
 import {
-    autenticacionSchema, crearUsuarioSchema,
+    autenticacionSchema,
     createAsistenteSchema,
     createEventoSchema, createReservaSchema, deleteAsistenteSchema,
     deleteEventoSchema, deleteReservaSchema,
@@ -15,9 +15,28 @@ import {
     asistentePost
 } from "@infrastructure/api/routers/AsistenteRouter";
 import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastructure/api/routers/ReservaRouter";
-import {autenticar, crearUsuario} from "@infrastructure/api/routers/AutenticacionRouter";
+import {autenticar} from "@infrastructure/api/routers/AutenticacionRouter";
+import {DEPENDENCY_CONTAINER} from "@configuration";
+import {AutenticacionAppService} from "@application/services";
+import {PREFIX} from "@util";
 
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
+    application.addHook('preValidation', async (request: FastifyRequest, reply: FastifyReply) => {
+        if (request.url === `${PREFIX}/autenticar`) {
+            return; // Skip validation for this route
+        }
+        try {
+            const autenticarService = DEPENDENCY_CONTAINER.get(AutenticacionAppService);
+            const estado = await autenticarService.validarToken(request.headers.authorization);
+            if (!estado) {
+                reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
+                return;
+            }
+        } catch (err) {
+            reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
+        }
+    });
+
     const pathEvento = '/evento';
     application.get(`${pathEvento}/:id`, { schema: eventoGetSchema }, eventoGet);
     application.post(`${pathEvento}`, { schema: createEventoSchema }, eventoPost);
@@ -40,6 +59,6 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
 
     const pathAutenticacion = '/autenticar';
     application.post(`${pathAutenticacion}`, { schema: autenticacionSchema } ,autenticar);
-    application.post(`${pathAutenticacion}/crear`, { schema: crearUsuarioSchema }, crearUsuario);
+    //application.post(`${pathAutenticacion}/crear`, { schema: crearUsuarioSchema }, crearUsuario);
 
 };

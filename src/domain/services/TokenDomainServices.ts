@@ -8,6 +8,8 @@ export const generarToken = (usuario: UsuarioEntity): string => {
 
 export const validarJWT = (token: string): UsuarioJWT | null => {
     try {
+        // extract Bearer
+        token = token.split(' ')[1];
         return jwt.verify(token, KEY_JWT) as UsuarioJWT;
     } catch (error) {
         // Si hay un error de verificación (token inválido o expirado), devuelve null
