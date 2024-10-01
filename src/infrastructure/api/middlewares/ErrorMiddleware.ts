@@ -13,7 +13,11 @@ const buildErrorResponse = (error: FastifyError, cause?: string, statusCode?: nu
 };
 
 const translateError = (error: FastifyError) => {
-    return buildErrorResponse(error, 'Syntax error in JSON', 500, ErrorCode.SYNTAX_ERROR);
+    let code = ErrorCode.UNKNOWN_ERROR;
+    if (error.validation) {
+        code = ErrorCode.BAD_MESSAGE;
+    }
+    return buildErrorResponse(error, error.message, error.statusCode, code);
     if (error instanceof Exception) {
         const cause = typeof error.cause === 'string' ? error.cause : undefined;
         return buildErrorResponse(error, cause as string);

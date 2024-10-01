@@ -22,3 +22,7 @@ export const POSTGRES_DATABASE = process.env.POSTGRES_DATABASE || '';
 
 export const KEY_JWT = process.env.KEY_JWT || '';
 
+export const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
+
+export const REDIS_PORT = process.env.REDIS_PORT || '6379';
+

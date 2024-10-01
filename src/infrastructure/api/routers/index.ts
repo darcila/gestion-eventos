@@ -1,11 +1,19 @@
-import {eventoDelete, eventoGet, eventoPost, eventoPatch} from './EventoRouter';
+import {
+    eventoDelete,
+    eventoGet,
+    eventoPost,
+    eventoPatch,
+    eventoLugarCercano,
+    eventoCercano,
+    totalAsistentes
+} from './EventoRouter';
 import {FastifyInstance, FastifyReply, FastifyRequest} from 'fastify';
 import {
     autenticacionSchema,
     createAsistenteSchema,
     createEventoSchema, createReservaSchema, deleteAsistenteSchema,
-    deleteEventoSchema, deleteReservaSchema,
-    eventoGetSchema, getAsistentePorIdentificacionSchema, getReservaSchema,
+    deleteEventoSchema, deleteReservaSchema, eventoAsistetesGetSchema, eventoCercanosGetSchema,
+    eventoGetSchema, eventoLugaresGetSchema, getAsistentePorIdentificacionSchema, getReservaSchema,
     pathEventoSchema, updateAsistenteSchema, updateReservaSchema
 } from "@infrastructure/api/swagger";
 import {
@@ -42,6 +50,9 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.post(`${pathEvento}`, { schema: createEventoSchema }, eventoPost);
     application.patch(`${pathEvento}`, { schema: pathEventoSchema }, eventoPatch);
     application.delete(`${pathEvento}/:id`, { schema: deleteEventoSchema }, eventoDelete);
+    application.get(`${pathEvento}/lugares`, { schema: eventoLugaresGetSchema }, eventoLugarCercano);
+    application.get(`${pathEvento}/cerca`, { schema: eventoCercanosGetSchema }, eventoCercano);
+    application.get(`${pathEvento}/:id/asistentes`, { schema: eventoAsistetesGetSchema }, totalAsistentes);
 
     const pathAsistente = '/asistente';
 

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import 'reflect-metadata';
 import {EventosRepository} from "@domain/repository";
-import {EventoEntity, ResultadoConId} from "@domain/entities";
+import {EventoEntity, EventoLugarCercano, ResultadoConId} from "@domain/entities";
 import {DEPENDENCY_CONTAINER, TYPES} from "@configuration";
 import {IDatabase, IMain} from "pg-promise";
 
@@ -53,6 +53,15 @@ export class EventosDao implements EventosRepository {
         } catch (error) {
             console.error('Error al guardar', error);
             return -1;
+        }
+    }
+    async eventosCercanos(lat: number, lng: number, distancia: number): Promise<EventoLugarCercano[]> {
+        try {
+            const sql = `SELECT nombre, lugar as direccion, fecha, valor, earth_distance(ll_to_earth(ubicacion[1], ubicacion[0]), ll_to_earth($1, $2)) as distancia FROM evento WHERE earth_distance(ll_to_earth(ubicacion[1], ubicacion[0]), ll_to_earth($1, $2)) <= $3;`;
+            return await this.db.manyOrNone<EventoLugarCercano>(sql, [lng, lat, distancia]);
+        } catch (error) {
+            console.error('Error al consultar eventos cercanos', error);
+            return [];
         }
     }
 }

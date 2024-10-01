@@ -16,7 +16,7 @@ export const eventoGetSchema: FastifySchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'number' }, // Removemos 'example'
+            id: { type: 'number', errorMessage: 'El ID del evento debe ser un número entero.'  }, // Removemos 'example'
         },
         required: ['id'],
     },
@@ -58,6 +58,137 @@ export const eventoGetSchema: FastifySchema = {
     },
 };
 
+export const eventoLugaresGetSchema: FastifySchema = {
+    description: 'Obtiene los lugares cercanos al evento, este devolvera 5 lugares cercanos as su posicion',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    querystring: {
+        type: 'object',
+        properties: {
+            tipo: { type: 'string' },
+            evento: { type: 'number' },
+        },
+        required: ['tipo', 'evento'],
+    },
+    response: {
+        200: {
+            description: 'Succesful response',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            nombre: { type: 'string' },
+                            direccion: { type: 'string' },
+                        },
+                    },
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] },
+            },
+        },
+    },
+};
+
+export const eventoCercanosGetSchema: FastifySchema = {
+    description: 'Obtiene eventos cercanos de acuerdo a una direccion y distancia en kilometros',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    querystring: {
+        type: 'object',
+        properties: {
+            direccion: {
+                type: 'string',
+                errorMessage: 'La dirección debe ser una cadena de texto que represente una ubicación válida.'
+            },
+            distancia: {
+                type: 'number',
+                errorMessage: 'La distancia debe ser un número que represente la distancia en kilómetros.',
+                minimum: 0
+            },
+            ciudad: {
+                type: 'string',
+                errorMessage: 'La ciudad debe ser una cadena de texto.'
+            },
+        },
+        required: ['direccion', 'distancia', 'ciudad'],
+        errorMessage: {
+            required: {
+                direccion: 'La dirección es requerida.',
+                distancia: 'La distancia es requerida.',
+                ciudad: 'La ciudad es requerida.'
+            }
+        }
+    },
+    response: {
+        200: {
+            description: 'Succesful response',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            nombre: { type: 'string' },
+                            direccion: { type: 'string' },
+                            fecha: { type: 'string', format: 'date' },
+                            valor: { type: 'number' },
+                            distancia: { type: 'number' },
+                        },
+                    },
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] },
+            },
+        },
+    },
+};
+
 export const createEventoSchema: FastifySchema = {
     description: 'Crear un evento',
     tags: ['Evento'],
@@ -73,17 +204,76 @@ export const createEventoSchema: FastifySchema = {
     },
     body: {
         type: 'object',
-        required: ['nombre', 'descripcion', 'lugar', 'ciudad', 'fecha', 'hora'], // 'nombre' es el único campo obligatorio
+        required: ['nombre', 'descripcion', 'lugar', 'ciudad', 'fecha', 'hora'],
+        errorMessage: {
+            required: {
+                nombre: 'El nombre del evento es requerido.',
+                descripcion: 'La descripción del evento es requerida.',
+                lugar: 'El lugar del evento es requerido.',
+                ciudad: 'La ciudad del evento es requerida.',
+                fecha: 'La fecha del evento es requerida.',
+                hora: 'La hora del evento es requerida.'
+            }
+        },
         properties: {
-            nombre: { type: 'string', maxLength: 200 },
-            descripcion: { type: 'string' },
-            lugar: { type: 'string', maxLength: 200 },
-            ciudad: { type: 'string', maxLength: 70 },
-            fecha: { type: 'string', format: 'date' },
-            hora: { type: 'string' },
-            categoria: { type: 'array' },
-            capacidad: { type: 'integer', minimum: 0 },
-            valor: { type: 'number', minimum: 0 }
+            nombre: {
+                type: 'string',
+                maxLength: 200,
+                errorMessage: {
+                    maxLength: 'El nombre del evento no puede exceder los 200 caracteres.'
+                }
+            },
+            descripcion: {
+                type: 'string',
+                errorMessage: 'La descripción del evento debe ser una cadena de texto.'
+            },
+            lugar: {
+                type: 'string',
+                maxLength: 200,
+                errorMessage: {
+                    maxLength: 'El lugar del evento no puede exceder los 200 caracteres.'
+                }
+            },
+            ciudad: {
+                type: 'string',
+                maxLength: 70,
+                errorMessage: {
+                    maxLength: 'La ciudad del evento no puede exceder los 70 caracteres.'
+                }
+            },
+            fecha: {
+                type: 'string',
+                format: 'date',
+                errorMessage: 'La fecha del evento debe tener el formato AAAA-MM-DD.'
+            },
+            hora: {
+                type: 'string',
+                errorMessage: 'La hora del evento debe ser una cadena de texto en formato válido (e.g., "14:30").'
+            },
+            categoria: {
+                type: 'array',
+                errorMessage: 'La categoría debe ser un array.' ,
+                items: {
+                    type: 'string',
+                    errorMessage: 'Cada categoría debe ser una cadena de texto.'
+                }
+            },
+            capacidad: {
+                type: 'integer',
+                minimum: 0,
+                errorMessage: {
+                    minimum: 'La capacidad del evento debe ser un número no negativo.',
+                    type: 'La capacidad del evento debe ser un número entero.'
+                }
+            },
+            valor: {
+                type: 'number',
+                minimum: 0,
+                errorMessage: {
+                    minimum: 'El valor del evento debe ser un número no negativo.',
+                    type: 'El valor del evento debe ser un número.'
+                }
+            }
         }
     },
     response: {
@@ -136,13 +326,46 @@ export const pathEventoSchema: FastifySchema = {
     body: {
         type: 'object',
         required: ['id'],
+        errorMessage: {
+            required: {
+                id: 'El ID del evento es requerido.'
+            }
+        },
         properties: {
-            id: { type: 'number' },
-            nombre: { type: 'string' },
-            fecha: { type: 'string', format: 'date' },
-            hora: { type: 'string', format: 'time' },
-            capacidad: { type: 'integer', minimum: 0 },
-            valor: { type: 'number', minimum: 0 }
+            id: {
+                type: 'number',
+                errorMessage: 'El ID del evento debe ser un número entero.'
+            },
+            nombre: {
+                type: 'string',
+                errorMessage: 'El nombre del evento debe ser una cadena de texto.'
+            },
+            fecha: {
+                type: 'string',
+                format: 'date',
+                errorMessage: 'La fecha del evento debe tener el formato AAAA-MM-DD.'
+            },
+            hora: {
+                type: 'string',
+                format: 'time',
+                errorMessage: 'La hora del evento debe tener el formato HH:MM.'
+            },
+            capacidad: {
+                type: 'integer',
+                minimum: 0,
+                errorMessage: {
+                    type: 'La capacidad del evento debe ser un número entero.',
+                    minimum: 'La capacidad del evento debe ser un número no negativo.'
+                }
+            },
+            valor: {
+                type: 'number',
+                minimum: 0,
+                errorMessage: {
+                    type: 'El valor del evento debe ser un número.',
+                    minimum: 'El valor del evento debe ser un número no negativo.'
+                }
+            }
         }
     },
     response: {
@@ -169,7 +392,6 @@ export const pathEventoSchema: FastifySchema = {
                 message: { type: 'string' }
             }
         }
-        // ... otros códigos de respuesta de error según sea necesario
     }
 };
 
@@ -189,8 +411,16 @@ export const deleteEventoSchema: FastifySchema = {
     params: {
         type: 'object',
         required: ['id'],
+        errorMessage: {
+            required: {
+                id: 'El ID del evento es requerido.'
+            }
+        },
         properties: {
-            id: { type: 'integer' }
+            id: {
+                type: 'integer',
+                errorMessage: 'El ID del evento debe ser un número entero.'
+            }
         }
     },
     response: {
@@ -218,4 +448,69 @@ export const deleteEventoSchema: FastifySchema = {
             }
         }
     }
+};
+
+export const eventoAsistetesGetSchema: FastifySchema = {
+    description: 'Obtiene el total de asistentes a un evento',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    params: {
+        type: 'object',
+        properties: {
+            id: {
+                type: 'number',
+                errorMessage: 'El ID del evento debe ser un número.'
+            },
+        },
+        required: ['id'],
+        errorMessage: {
+            required: {
+                id: 'El ID del evento es requerido.'
+            }
+        }
+    },
+    response: {
+        200: {
+            description: 'Succesful response',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                        descripcion: { type: 'string' },
+                        lugar: { type: 'string' },
+                        ciudad: { type: 'string' },
+                        fecha: { type: 'string', format: 'date' },
+                        hora: { type: 'string' },
+                        totalAsistentes: { type: 'number' }
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] },
+            },
+        },
+    },
 };

@@ -16,10 +16,30 @@ export const createReservaSchema: FastifySchema = {
     body: {
         type: 'object',
         required: ['asistente_id', 'evento_id', 'cantidad_boletos'],
+        errorMessage: {
+            required: {
+                asistente_id: 'El ID del asistente es requerido.',
+                evento_id: 'El ID del evento es requerido.',
+                cantidad_boletos: 'La cantidad de boletos es requerida.'
+            }
+        },
         properties: {
-            asistente_id: { type: 'integer' },
-            evento_id: { type: 'integer' },
-            cantidad_boletos: { type: 'integer', minimum: 1 },
+            asistente_id: {
+                type: 'integer',
+                errorMessage: 'El ID del asistente debe ser un número entero.'
+            },
+            evento_id: {
+                type: 'integer',
+                errorMessage: 'El ID del evento debe ser un número entero.'
+            },
+            cantidad_boletos: {
+                type: 'integer',
+                minimum: 1,
+                errorMessage: {
+                    minimum: 'La cantidad de boletos debe ser al menos 1.',
+                    type: 'La cantidad de boletos debe ser un número entero.'
+                }
+            },
         }
     },
     response: {
@@ -77,9 +97,17 @@ export const getReservaSchema: FastifySchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'number' },
+            id: {
+                type: 'number',
+                errorMessage: 'El ID debe ser un número.'
+            },
         },
         required: ['id'],
+        errorMessage: {
+            required: {
+                id: 'El ID es requerido.'
+            }
+        }
     },
     response: {
         200: {
@@ -133,9 +161,25 @@ export const updateReservaSchema: FastifySchema = {
     body: {
         type: 'object',
         required: ['id', 'estado'],
+        errorMessage: {
+            required: {
+                id: 'El ID es requerido.',
+                estado: 'El estado es requerido.'
+            }
+        },
         properties: {
-        id: { type: 'number' },
-        estado: { type: 'string', enum: ['confirmada', 'cancelada'] }
+            id: {
+                type: 'number',
+                errorMessage: 'El ID debe ser un número.'
+            },
+            estado: {
+                type: 'string',
+                enum: ['confirmada', 'cancelada'],
+                errorMessage: {
+                    enum: 'El estado debe ser "confirmada" o "cancelada".',
+                    type: 'El estado debe ser una cadena de texto.'
+                }
+            }
         }
     },
     response: {
@@ -188,8 +232,16 @@ export const deleteReservaSchema: FastifySchema = {
     params: {
         type: 'object',
         required: ['id'],
+        errorMessage: {
+            required: {
+                id: 'El ID es requerido.'
+            }
+        },
         properties: {
-            id: { type: 'number' }
+            id: {
+                type: 'number',
+                errorMessage: 'El ID debe ser un número.'
+            }
         }
     },
     response: {

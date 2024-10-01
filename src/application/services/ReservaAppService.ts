@@ -8,13 +8,15 @@ import {
     ReservaRespuestaMensaje
 } from "@domain/entities"; // Asegúrate de tener estas entidades definidas
 import { DEPENDENCY_CONTAINER } from "@configuration";
-import {AsistenteInfraService, EventoInfraService, ReservaInfraService} from "@infrastructure/services"; // Asegúrate de tener este servicio definido
+import {AsistenteInfraService, EventoInfraService, ReservaInfraService} from "@infrastructure/services";
+import {ReservaCacheInfraService} from "@infrastructure/services/ReservaCacheInfraService"; // Asegúrate de tener este servicio definido
 
 @injectable()
 export class ReservaAppService {
     private reservaInfraService = DEPENDENCY_CONTAINER.get(ReservaInfraService);
     private asistenteInfraService = DEPENDENCY_CONTAINER.get(AsistenteInfraService);
     private eventoInfraService = DEPENDENCY_CONTAINER.get(EventoInfraService);
+    private reservaCacheInfraService = DEPENDENCY_CONTAINER.get(ReservaCacheInfraService);
 
     async getReserva(id: number): Promise<Response<ReservaEntity | null>> {
         const result = await this.reservaInfraService.consultar(id);
@@ -33,6 +35,7 @@ export class ReservaAppService {
 
     async patchReserva(reserva: ReservaPatchParam): Promise<Response<ReservaEntity | null>> {
         const reservaEntity = await this.reservaInfraService.actualizar(reserva);
+        this.reservaCacheInfraService.invalidateCacheAsistentesCount(reservaEntity.evento_id);
         return Result.ok(reservaEntity);
     }
 

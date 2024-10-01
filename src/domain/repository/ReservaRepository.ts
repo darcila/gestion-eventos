@@ -5,4 +5,5 @@ export interface ReservasRepository {
     consultarPorId(id: number): Promise<ReservaEntity | null>;
     actualizar(reserva: ReservaEntity): Promise<number | null | undefined>;
     eliminar(id: number): Promise<number | null | undefined>;
+    totalAsistentes(idEvento: number): Promise<number>;
 }

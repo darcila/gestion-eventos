@@ -14,7 +14,15 @@ import swaggerUi, {FastifySwaggerUiOptions} from '@fastify/swagger-ui';
 
 export const application = fastify({
     genReqId: (_) => randomBytes(20).toString('hex'),
-    logger: true
+    logger: true,
+    ajv: {
+        customOptions: {
+            allErrors: true,  //  Para obtener todos los errores de validación
+        },
+        plugins: [
+            require('ajv-errors')
+        ]
+    }
 });
 
 // middlewares

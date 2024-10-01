@@ -4,11 +4,18 @@ import {AsistenteAppService, EventoAppService, ReservaAppService} from '@applica
 import { MapApiClient } from '@infrastructure/api-client';
 import {IDatabase, IMain} from "pg-promise";
 import {TYPES} from "@configuration/Types";
-import {AsistentesDao, dbEventos, EventosDao, ReservasDao, UsuariosDao} from "@infrastructure/repositories";
+import {
+    AsistentesDao, clientAdapter,
+    dbEventos,
+    EventosDao,
+    ReservasCacheDao,
+    ReservasDao,
+    UsuariosDao
+} from "@infrastructure/repositories";
 import {
     AsistentesRepository,
     EventosRepository,
-    MapApiClientRepository,
+    MapApiClientRepository, ReservaCacheRepository,
     ReservasRepository,
     UsuariosRepository
 } from "@domain/repository";
@@ -19,11 +26,15 @@ import {
     ReservaInfraService
 } from "@infrastructure/services";
 import {AutenticacionAppService} from "@application/services/AutenticacionAppService";
+import {IoRedisAdapter} from "@type-cacheable/ioredis-adapter";
+import {ReservaCacheInfraService} from "@infrastructure/services/ReservaCacheInfraService";
 
 export const DEPENDENCY_CONTAINER = new Container();
 
 export const createDependencyContainer = (): void => {
     DEPENDENCY_CONTAINER.bind<IDatabase<IMain>>(TYPES.PostgresqlEventos).toConstantValue(dbEventos);
+    DEPENDENCY_CONTAINER.bind<IoRedisAdapter>(TYPES.RedisClient).toConstantValue(clientAdapter);
+
     DEPENDENCY_CONTAINER.bind(MapApiClient).toSelf().inSingletonScope();
     // Servicios App
     DEPENDENCY_CONTAINER.bind(EventoAppService).toSelf().inSingletonScope();
@@ -36,9 +47,11 @@ export const createDependencyContainer = (): void => {
     DEPENDENCY_CONTAINER.bind<AsistentesRepository>(TYPES.AsistentesRepository).to(AsistentesDao).inSingletonScope();
     DEPENDENCY_CONTAINER.bind<ReservasRepository>(TYPES.ReservasRepository).to(ReservasDao).inSingletonScope();
     DEPENDENCY_CONTAINER.bind<UsuariosRepository>(TYPES.UsuariosRepository).to(UsuariosDao).inSingletonScope();
+    DEPENDENCY_CONTAINER.bind<ReservaCacheRepository>(TYPES.ReservaCacheRepository).to(ReservasCacheDao).inSingletonScope();
     // servicios infraestructura
     DEPENDENCY_CONTAINER.bind(EventoInfraService).toSelf().inSingletonScope();
     DEPENDENCY_CONTAINER.bind(MapInfraService).toSelf().inSingletonScope();
     DEPENDENCY_CONTAINER.bind(AsistenteInfraService).toSelf().inSingletonScope();
     DEPENDENCY_CONTAINER.bind(ReservaInfraService).toSelf().inSingletonScope();
+    DEPENDENCY_CONTAINER.bind(ReservaCacheInfraService).toSelf().inSingletonScope();
 }

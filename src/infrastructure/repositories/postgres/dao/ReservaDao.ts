@@ -65,4 +65,17 @@ export class ReservasDao implements ReservasRepository {
             return -1;
         }
     }
+    async totalAsistentes(idEvento: number): Promise<number> {
+        try {
+            const sql = `SELECT coalesce(SUM(cantidad_boletos), 0) as total_asistentes 
+                         FROM reserva 
+                         WHERE evento_id = $1 and estado = 'confirmada'`;
+
+            const result = await this.db.one<{ total_asistentes: number }>(sql, [idEvento]);
+            return result.total_asistentes;
+        } catch (error) {
+            console.error('Error al consultar el total de asistentes', error);
+            return -1;
+        }
+    }
 }

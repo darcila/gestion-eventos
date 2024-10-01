@@ -6,9 +6,21 @@ export const autenticacionSchema: FastifySchema = {
     body: {
         type: 'object',
         required: ['usuario', 'clave'],
+        errorMessage: {
+            required: {
+                usuario: 'El nombre de usuario es requerido.',
+                clave: 'La clave es requerida.'
+            }
+        },
         properties: {
-            usuario: { type: 'string' },
-            clave: { type: 'string' },
+            usuario: {
+                type: 'string',
+                errorMessage: 'El nombre de usuario debe ser una cadena de texto.'
+            },
+            clave: {
+                type: 'string',
+                errorMessage: 'La clave debe ser una cadena de texto.'
+            },
         }
     },
     response: {
@@ -46,9 +58,33 @@ export const crearUsuarioSchema: FastifySchema = {
     body: {
         type: 'object',
         required: ['usuario', 'clave'],
+        errorMessage: {
+            required: {
+                usuario: 'El nombre de usuario es requerido.',
+                clave: 'La clave es requerida.'
+            }
+        },
         properties: {
-            usuario: { type: 'string' },
-            clave: { type: 'string' },
+            usuario: {
+                type: 'string',
+                minLength: 5,
+                maxLength: 50,
+                errorMessage: {
+                    minLength: 'El nombre de usuario debe tener al menos 5 caracteres.',
+                    maxLength: 'El nombre de usuario no puede exceder los 50 caracteres.',
+                    type: 'El nombre de usuario debe ser una cadena de texto.'
+                }
+            },
+            clave: {
+                type: 'string',
+                minLength: 8,
+                maxLength: 100,
+                errorMessage: {
+                    minLength: 'La clave debe tener al menos 8 caracteres.',
+                    maxLength: 'La clave no puede exceder los 100 caracteres.',
+                    type: 'La clave debe ser una cadena de texto.'
+                }
+            },
         }
     },
     response: {
