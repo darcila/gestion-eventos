@@ -10,3 +10,4 @@ export * from './ReservaResultado';
 export * from './AutenticarRouteParams';
 export * from './AutenticacionEntity';
 export * from './UsuarioEntity';
+export * from './FileJobs';

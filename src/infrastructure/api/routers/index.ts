@@ -5,7 +5,7 @@ import {
     eventoPatch,
     eventoLugarCercano,
     eventoCercano,
-    totalAsistentes
+    totalAsistentes, subirEvento, estadoSubirEvento
 } from './EventoRouter';
 import {FastifyInstance, FastifyReply, FastifyRequest} from 'fastify';
 import {
@@ -38,7 +38,6 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
             const estado = await autenticarService.validarToken(request.headers.authorization);
             if (!estado) {
                 reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
-                return;
             }
         } catch (err) {
             reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
@@ -53,6 +52,9 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.get(`${pathEvento}/lugares`, { schema: eventoLugaresGetSchema }, eventoLugarCercano);
     application.get(`${pathEvento}/cerca`, { schema: eventoCercanosGetSchema }, eventoCercano);
     application.get(`${pathEvento}/:id/asistentes`, { schema: eventoAsistetesGetSchema }, totalAsistentes);
+    application.post(`${pathEvento}/subir`, subirEvento);
+    application.get(`${pathEvento}/status/:jobId`, estadoSubirEvento);
+
 
     const pathAsistente = '/asistente';
 
