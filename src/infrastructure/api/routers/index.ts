@@ -11,10 +11,22 @@ import {FastifyInstance, FastifyReply, FastifyRequest} from 'fastify';
 import {
     autenticacionSchema,
     createAsistenteSchema,
-    createEventoSchema, createReservaSchema, deleteAsistenteSchema,
-    deleteEventoSchema, deleteReservaSchema, eventoAsistetesGetSchema, eventoCercanosGetSchema,
-    eventoGetSchema, eventoLugaresGetSchema, getAsistentePorIdentificacionSchema, getReservaSchema,
-    pathEventoSchema, updateAsistenteSchema, updateReservaSchema
+    createEventoSchema,
+    createReservaSchema,
+    deleteAsistenteSchema,
+    deleteEventoSchema,
+    deleteReservaSchema,
+    eventoAsistetesGetSchema,
+    eventoCercanosGetSchema,
+    eventoGetSchema,
+    eventoLugaresGetSchema,
+    getAsistentePorIdentificacionSchema,
+    getProcessStatusSchema,
+    getReservaSchema,
+    pathEventoSchema,
+    updateAsistenteSchema,
+    updateReservaSchema,
+    uploadExcelSchema
 } from "@infrastructure/api/swagger";
 import {
     asistenteDelete,
@@ -52,8 +64,8 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.get(`${pathEvento}/lugares`, { schema: eventoLugaresGetSchema }, eventoLugarCercano);
     application.get(`${pathEvento}/cerca`, { schema: eventoCercanosGetSchema }, eventoCercano);
     application.get(`${pathEvento}/:id/asistentes`, { schema: eventoAsistetesGetSchema }, totalAsistentes);
-    application.post(`${pathEvento}/subir`, subirEvento);
-    application.get(`${pathEvento}/status/:jobId`, estadoSubirEvento);
+    application.post(`${pathEvento}/subir`, { schema: uploadExcelSchema },subirEvento);
+    application.get(`${pathEvento}/status/:jobId`, {schema: getProcessStatusSchema}, estadoSubirEvento);
 
 
     const pathAsistente = '/asistente';

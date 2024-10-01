@@ -514,3 +514,125 @@ export const eventoAsistetesGetSchema: FastifySchema = {
         },
     },
 };
+
+export const uploadExcelSchema: FastifySchema = {
+    description: 'Sube un archivo Excel y retorna el ID del proceso. \n\n' +
+        '**Descarga la plantilla aquí:** [enlace a la plantilla de Excel](https://docs.google.com/spreadsheets/d/1IOdZIaZ8B09ToxTk84F_2KlpjtPBIjgy/edit?usp=sharing&ouid=103535298326465552369&rtpof=true&sd=true)',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    consumes: ['multipart/form-data'], // Importante para archivos
+    body: {
+        type: 'object',
+        properties: {
+            file: {
+                type: 'string',
+                format: 'binary' // Indica que el cuerpo es un archivo binario
+            }
+        },
+        required: ['file']
+    },
+    response: {
+        200: {
+            description: 'Respuesta exitosa',
+            type: 'object',
+            properties: {
+                isError: {type: 'boolean'},
+                id: {type: 'string', description: 'ID del proceso'},
+                timestamp: {type: 'string', format: 'date-time'}
+            }
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: {type: 'boolean'},
+                message: {type: 'string'},
+                code: {type: 'string'},
+                statusCode: {type: 'number'},
+                cause: {type: ['string', 'null']}
+            }
+        },
+        404: {
+            description: 'Not Found',
+            type: 'object',
+            properties: {
+                isError: {type: 'boolean'},
+                message: {type: 'string'},
+                code: {type: 'string'},
+                statusCode: {type: 'number'},
+                cause: {type: ['string', 'null']}
+            }
+        },
+    }
+};
+
+export const getProcessStatusSchema: FastifySchema = {
+    description: 'Obtiene el estado de un proceso por su ID',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    params: { // Se define un objeto para los parámetros de la ruta
+        type: 'object',
+        properties: {
+            jobId: {
+                type: 'string',
+                description: 'ID del proceso'
+            }
+        },
+        required: ['jobId']
+    },
+    response: {
+        200: {
+            description: 'Respuesta exitosa',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                estado: {
+                    type: 'string',
+                    description: 'Estado del proceso',
+                    enum: ['en cola', 'procesando', 'completado', 'error'] // Ejemplo de posibles estados
+                },
+                timestamp: { type: 'string', format: 'date-time' }
+            }
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] }
+            }
+        },
+        404: { // Se agrega una posible respuesta 404 Not Found
+            description: 'Proceso no encontrado',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] }
+            }
+        }
+    }
+};

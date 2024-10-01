@@ -12,9 +12,6 @@ import path from 'path';
 import * as fs from "node:fs";
 import {fileQueue} from "@infrastructure/colas";
 
-//import {fileQueue} from "@infrastructure/colas";
-//import {fileQueue} from "@infrastructure/colas";
-
 export const eventoGet = async (req:  FastifyRequest<{ Params: EventoGetParam }>, reply: FastifyReply): Promise<FastifyReply | void> => {
     const eventoService = DEPENDENCY_CONTAINER.get(EventoAppService);
     const id = req.params.id as number;
