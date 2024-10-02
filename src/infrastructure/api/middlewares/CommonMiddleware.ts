@@ -50,7 +50,9 @@ export const middlewares = (application: FastifyInstance): void => {
     });
 
     application.addHook('preValidation', async (request: FastifyRequest, reply: FastifyReply) => {
-        if (request.url === `${PREFIX}/autenticar`) {
+        const url = request.url;
+        const regex = /^\/docs/;
+        if (url === `${PREFIX}/autenticar` || regex.test(url)) {
             return; // Skip validation for this route
         }
 

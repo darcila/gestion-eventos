@@ -10,7 +10,7 @@ export const API_EXAMPLE = process.env.API_EXAMPLE;
 
 export const KEY_MAPBOX = process.env.KEY_MAPBOX;
 
-export const POSTGRES_HOST = process.env.POSTGRES_HOST || 'localhost';
+export const POSTGRES_HOST = process.env.POSTGRES_HOST || 'postgres';
 
 export const POSTGRES_USER = process.env.POSTGRES_USER || '';
 

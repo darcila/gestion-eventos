@@ -16,7 +16,7 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_DATABASE=eventos
       - KEY_JWT=secretEventos
-      - REDIS_HOST=localhost
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
     ports:
       - 85:8090
