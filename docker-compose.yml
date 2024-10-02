@@ -10,7 +10,7 @@ services:
       - PORT=8090
       - SERVICE_NAME=eventos
       - KEY_MAPBOX=pk.eyJ1IjoiZGllZ29hcmNpbGEiLCJhIjoiY20xam5vNDBkMGdqOTJqbjN1ZnNkbWVkaiJ9.7wPozJejJ_zvY1TzECBSxw
-      - POSTGRES_HOST=localhost
+      - POSTGRES_HOST=postgres
       - POSTGRES_USER=darcila
       - POSTGRES_PASSWORD=darcila
       - POSTGRES_PORT=5432
