@@ -7,7 +7,7 @@ import {
     eventoCercano,
     totalAsistentes, subirEvento, estadoSubirEvento
 } from './EventoRouter';
-import {FastifyInstance, FastifyReply, FastifyRequest} from 'fastify';
+import {FastifyInstance} from 'fastify';
 import {
     autenticacionSchema,
     createAsistenteSchema,
@@ -36,26 +36,8 @@ import {
 } from "@infrastructure/api/routers/AsistenteRouter";
 import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastructure/api/routers/ReservaRouter";
 import {autenticar} from "@infrastructure/api/routers/AutenticacionRouter";
-import {DEPENDENCY_CONTAINER} from "@configuration";
-import {AutenticacionAppService} from "@application/services";
-import {PREFIX} from "@util";
 
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
-    application.addHook('preValidation', async (request: FastifyRequest, reply: FastifyReply) => {
-        if (request.url === `${PREFIX}/autenticar`) {
-            return; // Skip validation for this route
-        }
-        try {
-            const autenticarService = DEPENDENCY_CONTAINER.get(AutenticacionAppService);
-            const estado = await autenticarService.validarToken(request.headers.authorization);
-            if (!estado) {
-                reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
-            }
-        } catch (err) {
-            reply.status(401).send({ error: 'Unauthorized', message: 'Token invalido' });
-        }
-    });
-
     const pathEvento = '/evento';
     application.get(`${pathEvento}/:id`, { schema: eventoGetSchema }, eventoGet);
     application.post(`${pathEvento}`, { schema: createEventoSchema }, eventoPost);

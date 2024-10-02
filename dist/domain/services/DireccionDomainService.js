@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.transformarDireccion = void 0;
+const transformarDireccion = (direccionOriginal) => {
+    return direccionOriginal.replace(/[^a-zA-Z0-9\s]/g, "");
+};
+exports.transformarDireccion = transformarDireccion;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGlyZWNjaW9uRG9tYWluU2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9kb21haW4vc2VydmljZXMvRGlyZWNjaW9uRG9tYWluU2VydmljZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBTyxNQUFPLG9CQUFvQixHQUFHLENBQUMsaUJBQXlCLEVBQVUsRUFBRTtJQUN2RSxPQUFRLGlCQUFpQixDQUFDLE9BQU8sQ0FBQyxpQkFBaUIsRUFBRSxFQUFFLENBQUMsQ0FBQztBQUM3RCxDQUFDLENBQUE7QUFGYSxRQUFBLG9CQUFvQix3QkFFakMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY29uc3QgIHRyYW5zZm9ybWFyRGlyZWNjaW9uID0gKGRpcmVjY2lvbk9yaWdpbmFsOiBzdHJpbmcpOiBzdHJpbmcgPT4ge1xuICAgIHJldHVybiAgZGlyZWNjaW9uT3JpZ2luYWwucmVwbGFjZSgvW15hLXpBLVowLTlcXHNdL2csIFwiXCIpO1xufVxuIl19

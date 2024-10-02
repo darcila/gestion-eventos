@@ -35,7 +35,7 @@ export class ReservaAppService {
 
     async patchReserva(reserva: ReservaPatchParam): Promise<Response<ReservaEntity | null>> {
         const reservaEntity = await this.reservaInfraService.actualizar(reserva);
-        this.reservaCacheInfraService.invalidateCacheAsistentesCount(reservaEntity.evento_id);
+        await this.reservaCacheInfraService.invalidateCacheAsistentesCount(reservaEntity.evento_id);
         return Result.ok(reservaEntity);
     }
 

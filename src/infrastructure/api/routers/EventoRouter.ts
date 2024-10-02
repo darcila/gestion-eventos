@@ -74,7 +74,7 @@ export const estadoSubirEvento = async (req: FastifyRequest<{ Params: { jobId: s
 
 export const subirEvento = async (req: FastifyRequest, reply: FastifyReply): Promise<FastifyReply | void> => {
     const file = await req.file();
-    if (!file || file === undefined) {
+    if (!file) {
         reply.code(400).send({ error: 'No se ha enviado ningun archivo' });
     }
     try {

@@ -9,4 +9,5 @@ const client = new Redis({
     host: REDIS_HOST,
     port: parseInt(REDIS_PORT as string)
 });
+
 export const clientAdapter = useAdapter(client);

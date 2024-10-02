@@ -5,6 +5,7 @@ export enum ErrorCode {
     REPOSITORY_ERROR = 'REPOSITORY_ERROR',
     PUBSUB_ERROR = 'PUBSUB_ERROR',
     API_CLIENT = 'API_CLIENT',
+    UNAUTHORIZED = 'UNAUTHORIZED',
 }
 
 export enum StatusCode {

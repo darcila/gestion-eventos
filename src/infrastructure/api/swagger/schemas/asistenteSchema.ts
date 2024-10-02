@@ -74,6 +74,7 @@ export const createAsistenteSchema: FastifySchema = {
                 data: {
                     type: 'object',
                     properties: {
+                        id: { type: 'number' },
                         identificacion: { type: 'string' },
                         nombre: { type: 'string' },
                         direccion: { type: 'string' },
@@ -134,6 +135,7 @@ export const getAsistentePorIdentificacionSchema: FastifySchema = {
                 data: {
                     type: 'object',
                     properties: {
+                        id: { type: 'number' },
                         identificacion: { type: 'string' },
                         nombre: { type: 'string' },
                         direccion: { type: 'string' },
