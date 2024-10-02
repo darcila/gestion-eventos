@@ -1,11 +1,32 @@
-import {eventoDelete, eventoGet, eventoPost, eventoPatch} from './EventoRouter';
-import { FastifyInstance } from 'fastify';
 import {
+    eventoDelete,
+    eventoGet,
+    eventoPost,
+    eventoPatch,
+    eventoLugarCercano,
+    eventoCercano,
+    totalAsistentes, subirEvento, estadoSubirEvento
+} from './EventoRouter';
+import {FastifyInstance} from 'fastify';
+import {
+    autenticacionSchema,
     createAsistenteSchema,
-    createEventoSchema, createReservaSchema, deleteAsistenteSchema,
-    deleteEventoSchema, deleteReservaSchema,
-    eventoGetSchema, getAsistentePorIdentificacionSchema, getReservaSchema,
-    pathEventoSchema, updateAsistenteSchema, updateReservaSchema
+    createEventoSchema,
+    createReservaSchema,
+    deleteAsistenteSchema,
+    deleteEventoSchema,
+    deleteReservaSchema,
+    eventoAsistetesGetSchema,
+    eventoCercanosGetSchema,
+    eventoGetSchema,
+    eventoLugaresGetSchema,
+    getAsistentePorIdentificacionSchema,
+    getProcessStatusSchema,
+    getReservaSchema,
+    pathEventoSchema,
+    updateAsistenteSchema,
+    updateReservaSchema,
+    uploadExcelSchema
 } from "@infrastructure/api/swagger";
 import {
     asistenteDelete,
@@ -14,6 +35,7 @@ import {
     asistentePost
 } from "@infrastructure/api/routers/AsistenteRouter";
 import {reservaDelete, reservaGet, reservaPatch, reservaPost} from "@infrastructure/api/routers/ReservaRouter";
+import {autenticar} from "@infrastructure/api/routers/AutenticacionRouter";
 
 export const initRoutes = async (application: FastifyInstance): Promise<void> => {
     const pathEvento = '/evento';
@@ -21,6 +43,12 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.post(`${pathEvento}`, { schema: createEventoSchema }, eventoPost);
     application.patch(`${pathEvento}`, { schema: pathEventoSchema }, eventoPatch);
     application.delete(`${pathEvento}/:id`, { schema: deleteEventoSchema }, eventoDelete);
+    application.get(`${pathEvento}/lugares`, { schema: eventoLugaresGetSchema }, eventoLugarCercano);
+    application.get(`${pathEvento}/cerca`, { schema: eventoCercanosGetSchema }, eventoCercano);
+    application.get(`${pathEvento}/:id/asistentes`, { schema: eventoAsistetesGetSchema }, totalAsistentes);
+    application.post(`${pathEvento}/subir`, { schema: uploadExcelSchema },subirEvento);
+    application.get(`${pathEvento}/status/:jobId`, {schema: getProcessStatusSchema}, estadoSubirEvento);
+
 
     const pathAsistente = '/asistente';
 
@@ -35,4 +63,9 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.post(`${pathReserva}`, { schema: createReservaSchema }, reservaPost);
     application.patch(`${pathReserva}`, { schema: updateReservaSchema }, reservaPatch);
     application.delete(`${pathReserva}/:id`, { schema: deleteReservaSchema }, reservaDelete);
+
+    const pathAutenticacion = '/autenticar';
+    application.post(`${pathAutenticacion}`, { schema: autenticacionSchema } ,autenticar);
+    //application.post(`${pathAutenticacion}/crear`, { schema: crearUsuarioSchema }, crearUsuario);
+
 };

@@ -22,6 +22,12 @@ export class BadMessageException extends Exception {
     }
 }
 
+export class UnauthorizedException extends Exception {
+    constructor(cause: string, message: string) {
+        super(message, ErrorCode.UNAUTHORIZED, StatusCode.UNAUTHORIZED, cause);
+    }
+}
+
 export class RepositoryException extends Exception {
     constructor() {
         const message = 'Ocurrió un error al momento de guardar la guía';

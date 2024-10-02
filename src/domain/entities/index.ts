@@ -7,3 +7,7 @@ export * from './AsistenteResultado';
 export * from './ReservaEntity';
 export * from './ReservaRouteParams';
 export * from './ReservaResultado';
+export * from './AutenticarRouteParams';
+export * from './AutenticacionEntity';
+export * from './UsuarioEntity';
+export * from './FileJobs';

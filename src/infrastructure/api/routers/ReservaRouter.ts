@@ -20,10 +20,9 @@ export const reservaPost = async (req: FastifyRequest<{ Body: ReservaPostParam }
     return reply.send({ ...response, id: req.id });
 }
 
-export const reservaPatch = async (req: FastifyRequest<{ Params: ReservaGetParam, Body: ReservaPatchParam }>, reply: FastifyReply): Promise<FastifyReply | void> => {
+export const reservaPatch = async (req: FastifyRequest<{ Body: ReservaPatchParam }>, reply: FastifyReply): Promise<FastifyReply | void> => {
     const reservaService = DEPENDENCY_CONTAINER.get(ReservaAppService);
-    const id = req.params.id;
-    const response = await reservaService.patchReserva(id, req.body);
+    const response = await reservaService.patchReserva(req.body);
     return reply.send({ ...response, id: req.id });
 }
 

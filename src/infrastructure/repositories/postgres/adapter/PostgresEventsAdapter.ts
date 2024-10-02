@@ -7,7 +7,7 @@ import { CONNECTION_PARAMETERS_EVENTOS } from './config';
 import {IDataBase, IEnvironments} from "@infrastructure/repositories/postgres/model";
 import {IConnectionParameters} from "pg-promise/typescript/pg-subset";
 
-const getConnectionParametersAGW = (db: string): IConnectionParameters => {
+const getConnectionPostgres = (db: string): IConnectionParameters => {
     const DATABASES: IEnvironments<IConnectionParameters> = {
         development: {},
         testing: {},
@@ -21,5 +21,5 @@ const getConnectionParametersAGW = (db: string): IConnectionParameters => {
     return CONEXION[db];
 };
 
-const pgpCloud: IMain = pgPromise({ schema: 'public' });
-export const dbEventos = pgpCloud(getConnectionParametersAGW('cloudDb')) as IDatabase<IMain>;
+const pgp: IMain = pgPromise({ schema: 'public' });
+export const dbEventos = pgp(getConnectionPostgres('cloudDb')) as IDatabase<IMain>;

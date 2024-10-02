@@ -11,7 +11,7 @@ export class AsistentesDao implements AsistentesRepository {
 
     async actualizar(asistente: AsistenteEntity): Promise<number | null | undefined> {
         try {
-            const sql = `UPDATE asistente SET nombre = $1, direccion = $2, telefono = $3, correo = $4, categorias = $5, ubicacion = $6 WHERE identificacion = $7 RETURNING id`;
+            const sql = `UPDATE asistente SET nombre = $1, direccion = $2, telefono = $3, correo = $4, categorias = $5, ubicacion = $6, actualizado = NOW() WHERE identificacion = $7 RETURNING id`;
             let pointLatLong = null;
             if (asistente.ubicacion) {
                 pointLatLong = `(${asistente.ubicacion[0]},${asistente.ubicacion[1]})`;
@@ -57,7 +57,7 @@ export class AsistentesDao implements AsistentesRepository {
 
     async guardar(asistente: AsistenteEntity): Promise<number> {
         try {
-            const sql = `INSERT INTO asistente (identificacion, nombre, direccion, telefono, correo, categorias, ubicacion, ciudad) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`;
+            const sql = `INSERT INTO asistente (identificacion, nombre, direccion, telefono, correo, categorias, ubicacion, ciudad) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
             let pointLatLong = null;
             if (asistente.ubicacion) {
                 pointLatLong = `(${asistente.ubicacion[0]},${asistente.ubicacion[1]})`;
@@ -66,7 +66,7 @@ export class AsistentesDao implements AsistentesRepository {
             return resultado.id;
         } catch (error) {
             console.error('Error al guardar asistente', error);
-            return -1; // O lanza una excepción si prefieres manejar los errores de otra manera
+            return -1; 
         }
     }
 }

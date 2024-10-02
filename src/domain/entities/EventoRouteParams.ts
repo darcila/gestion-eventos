@@ -22,3 +22,14 @@ export interface EventoPatchParam {
     capacidad?: number;
     valor?: number;
 }
+
+export interface EventoConsultaLugar {
+    tipo: string;
+    evento: number;
+}
+
+export interface EventoCercanos {
+    direccion: string;
+    distancia: number;
+    ciudad: string;
+}

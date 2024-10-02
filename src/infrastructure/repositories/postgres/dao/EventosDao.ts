@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import 'reflect-metadata';
 import {EventosRepository} from "@domain/repository";
-import {EventoEntity, ResultadoConId} from "@domain/entities";
+import {EventoEntity, EventoLugarCercano, ResultadoConId} from "@domain/entities";
 import {DEPENDENCY_CONTAINER, TYPES} from "@configuration";
 import {IDatabase, IMain} from "pg-promise";
 
@@ -11,7 +11,7 @@ export class EventosDao implements EventosRepository {
 
     async actualizar(evento: EventoEntity): Promise<number | null | undefined> {
         try {
-            const sql = `UPDATE evento SET nombre = $1, fecha = $2, hora = $3, capacidad = $4, valor = $5 WHERE id = $6 RETURNING id`;
+            const sql = `UPDATE evento SET nombre = $1, fecha = $2, hora = $3, capacidad = $4, valor = $5, actualizado = NOW() WHERE id = $6 RETURNING id`;
             await this.db.oneOrNone<ResultadoConId>(sql, [evento.nombre, evento.fecha, evento.hora, evento.capacidad, evento.valor, evento.id]);
             return evento?.id;
         } catch (error) {
@@ -53,6 +53,15 @@ export class EventosDao implements EventosRepository {
         } catch (error) {
             console.error('Error al guardar', error);
             return -1;
+        }
+    }
+    async eventosCercanos(lat: number, lng: number, distancia: number): Promise<EventoLugarCercano[]> {
+        try {
+            const sql = `SELECT nombre, lugar as direccion, fecha, valor, earth_distance(ll_to_earth(ubicacion[1], ubicacion[0]), ll_to_earth($1, $2)) as distancia FROM evento WHERE earth_distance(ll_to_earth(ubicacion[1], ubicacion[0]), ll_to_earth($1, $2)) <= $3;`;
+            return await this.db.manyOrNone<EventoLugarCercano>(sql, [lng, lat, distancia]);
+        } catch (error) {
+            console.error('Error al consultar eventos cercanos', error);
+            return [];
         }
     }
 }

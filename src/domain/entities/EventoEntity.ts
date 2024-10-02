@@ -75,4 +75,11 @@ export class EventoEntity {
             capacidad, valor, ubicacion, estado, visible, creado, actualizado, eliminado, id
         );
     }
+    static fromJson(json: any): EventoEntity {
+        return new EventoEntity(
+            json.nombre, json.descripcion, json.lugar, json.ciudad, json.fecha, json.hora,
+            json.categoria, json.capacidad, json.valor, json.ubicacion, json.estado, json.visible,
+            json.creado, json.actualizado, json.eliminado, json.id
+        );
+    }
 }

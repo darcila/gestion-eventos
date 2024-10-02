@@ -6,7 +6,7 @@ import { createDependencyContainer } from '@configuration';
 import {FastifyListenOptions} from "fastify";
 
 const start = async () => {
-    const port = process.env.PORT || 8080;
+    const port = process.env.PORT || 8085;
     try {
         const options: FastifyListenOptions = {
             host: '0.0.0.0',

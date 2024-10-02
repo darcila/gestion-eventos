@@ -8,21 +8,18 @@ import { ReservaEntity, ReservaPatchParam } from "@domain/entities";
 export class ReservaInfraService {
     private reservasRepository = DEPENDENCY_CONTAINER.get<ReservasRepository>(TYPES.ReservasRepository);
 
-    async actualizar(id: number, reserva: ReservaPatchParam): Promise<ReservaEntity> {
-        const reservaEntity = await this.reservasRepository.consultarPorId(id);
+    async actualizar(reserva: ReservaPatchParam): Promise<ReservaEntity> {
+        const reservaEntity = await this.reservasRepository.consultarPorId(reserva.id);
         if (!reservaEntity) {
             throw new Error('Reserva no encontrada');
         }
 
-        // Actualiza solo los campos proporcionados en ReservaPatchParam
         if (reserva.cantidad_boletos !== undefined) {
             reservaEntity.cantidad_boletos = reserva.cantidad_boletos;
         }
         if (reserva.estado) {
             reservaEntity.estado = reserva.estado;
         }
-
-        // ... (otros campos que quieras permitir actualizar)
 
         const idReservaActualizada = await this.reservasRepository.actualizar(reservaEntity);
         if (idReservaActualizada) {
@@ -49,5 +46,8 @@ export class ReservaInfraService {
             return idReserva;
         }
         throw new Error('Error al guardar la reserva');
+    }
+    async totalAsistentes(idEvento: number): Promise<number> {
+        return await this.reservasRepository.totalAsistentes(idEvento);
     }
 }

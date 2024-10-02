@@ -1,4 +1,4 @@
-FROM 20.17.0-alpine
+FROM node:20.10-alpine
 
 WORKDIR /root/
 

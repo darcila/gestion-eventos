@@ -9,6 +9,7 @@ export interface ReservaPostParam {
 }
 
 export interface ReservaPatchParam {
+    id: number;
     cantidad_boletos?: number;
     estado?: string;
 }

@@ -1,41 +1,72 @@
 version: '3.8' # Usamos una versión reciente de Docker Compose
 
 services:
-#  nodejs: # Tu servicio Node.js existente
-#    build: . # Construye la imagen desde el Dockerfile actual
-#    image: my-nodejs-app:latest # Asigna un nombre a la imagen para futuras referencias
-#    working_dir: /root/
-#    environment:
-#      - NODE_ENV=production # Asegúrate de que Node.js esté en modo producción
-#    ports:
-#      - 3000:3000 # Expone el puerto 3000 de tu aplicación
-#    depends_on: # Espera a que estos servicios estén listos antes de iniciar
-#      - postgres
-#      - redis
-#      - rabbitmq
+  eventosdiego: # Tu servicio Node.js existente
+    build: . # Construye la imagen desde el Dockerfile actual
+    working_dir: /root/
+    environment:
+      - NODE_ENV=production # Asegúrate de que Node.js esté en modo producción
+      - DOMAIN=diego
+      - PORT=8090
+      - SERVICE_NAME=eventos
+      - KEY_MAPBOX=pk.eyJ1IjoiZGllZ29hcmNpbGEiLCJhIjoiY20xam5vNDBkMGdqOTJqbjN1ZnNkbWVkaiJ9.7wPozJejJ_zvY1TzECBSxw
+      - POSTGRES_HOST=postgres
+      - POSTGRES_USER=darcila
+      - POSTGRES_PASSWORD=darcila
+      - POSTGRES_PORT=5432
+      - POSTGRES_DATABASE=eventos
+      - KEY_JWT=secretEventos
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - 85:8090
+    depends_on:
+      - postgres
+      - redis
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - eventos_network
+
 
   postgres:
-    image: postgis/postgis:17-3.4-alpine # Usa la imagen oficial de PostgreSQL
+    image: postgis/postgis:17-3.4-alpine
     volumes:
-      - postgres-data:/var/lib/postgresql/data # Monta un volumen externo para los datos
+      - postgres-data:/var/lib/postgresql/data
       - ./scripts/restauracion.sql:/docker-entrypoint-initdb.d/restauracion.sql
+      - ./scripts/semilla.sql:/docker-entrypoint-initdb.d/semilla.sql
     environment:
       - POSTGRES_USER=darcila # Configura tu usuario de PostgreSQL
       - POSTGRES_PASSWORD=darcila # Configura tu contraseña
       - POSTGRES_DB=eventos # Configura el nombre de tu base de datos
     ports:
       - 5432:5432 # Expone el puerto 5432 de PostgreSQL
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U darcila -d eventos" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+        - eventos_network
 
   redis:
-    image: redis:latest # Usa la imagen oficial de Redis
+    image: redis:latest
     ports:
-      - 6379:6379 # Expone el puerto 6379 de Redis
-
-  rabbitmq:
-    image: rabbitmq:3-management # Usa la imagen oficial de RabbitMQ con la interfaz de gestión
-    ports:
-      - 5672:5672 # Puerto para la conexión AMQP
-      - 15672:15672 # Puerto para la interfaz de gestión
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - eventos_network
 
 volumes:
-  postgres-data: # Define el volumen externo para PostgreSQL
+  postgres-data:
+  eventos_diego_redis_data:
+
+networks:
+  eventos_network:
+    name: eventos_network
