@@ -10,7 +10,7 @@ export const swagger_config
             url: 'https://swagger.io',
             description: 'Encuentra más información aquí',
         },
-        host: 'localhost:8080',
+        host: '34.69.101.106/:8080',
         schemes: ['http'],
         consumes: ['application/json'],
         produces: ['application/json'],

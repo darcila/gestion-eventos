@@ -28,7 +28,7 @@ services:
       restart_policy:
         condition: on-failure
     networks:
-      - eventos_network
+      - eventos_network_diego
 
 
   postgres:
@@ -49,7 +49,7 @@ services:
       timeout: 10s
       retries: 5
     networks:
-        - eventos_network
+        - eventos_network_diego
 
   redis:
     image: redis:latest
@@ -61,12 +61,12 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - eventos_network
+      - eventos_network_diego
 
 volumes:
   postgres-data:
   eventos_diego_redis_data:
 
 networks:
-  eventos_network:
-    name: eventos_network
+  eventos_network_diego:
+    name: eventos_network_diego
