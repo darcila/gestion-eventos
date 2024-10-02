@@ -38,11 +38,11 @@ services:
       - ./scripts/restauracion.sql:/docker-entrypoint-initdb.d/restauracion.sql
       - ./scripts/semilla.sql:/docker-entrypoint-initdb.d/semilla.sql
     environment:
-      - POSTGRES_USER=darcila # Configura tu usuario de PostgreSQL
-      - POSTGRES_PASSWORD=darcila # Configura tu contraseña
-      - POSTGRES_DB=eventos # Configura el nombre de tu base de datos
+      - POSTGRES_USER=darcila
+      - POSTGRES_PASSWORD=darcila
+      - POSTGRES_DB=eventos
     ports:
-      - 5432:5432 # Expone el puerto 5432 de PostgreSQL
+      - 5435:5432
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U darcila -d eventos" ]
       interval: 30s
@@ -54,7 +54,7 @@ services:
   redis:
     image: redis:latest
     ports:
-      - 6379:6379
+      - 6385:6379
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 30s
