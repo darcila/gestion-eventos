@@ -69,7 +69,7 @@ export const dataResponseEvento = {
         descripcion: 'Descripcion Evento 2',
         lugar: 'Parque Simon Bolivar',
         ciudad: 'Bogota',
-        fecha: '2024-02-01',
+        fecha: '2024-02-02',
         hora: '10:00:00',
         valor: 10000,
         capacidad: 100,
