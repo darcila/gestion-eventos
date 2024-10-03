@@ -11,7 +11,7 @@ export const PG_CONECTION: IConnectionParameters = {
 export const CONNECTION_PARAMETERS_EVENTOS: IConnectionParameters = {
     ...PG_CONECTION,
     port: POSTGRES_PORT,
-    host: 'localhost',
+    host: 'postgres',
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
     database: POSTGRES_DATABASE,
