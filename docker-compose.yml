@@ -5,19 +5,7 @@ services:
     build: . # Construye la imagen desde el Dockerfile actual
     working_dir: /root/
     environment:
-      - NODE_ENV=production # Asegúrate de que Node.js esté en modo producción
-      - DOMAIN=diego
-      - PORT=8090
-      - SERVICE_NAME=eventos
-      - KEY_MAPBOX=pk.eyJ1IjoiZGllZ29hcmNpbGEiLCJhIjoiY20xam5vNDBkMGdqOTJqbjN1ZnNkbWVkaiJ9.7wPozJejJ_zvY1TzECBSxw
-      - POSTGRES_HOST=postgres
-      - POSTGRES_USER=darcila
-      - POSTGRES_PASSWORD=darcila
-      - POSTGRES_PORT=5432
-      - POSTGRES_DATABASE=eventos
-      - KEY_JWT=secretEventos
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - NODE_ENV=production
     ports:
       - 85:8090
     depends_on:
