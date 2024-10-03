@@ -60,6 +60,9 @@ jobs:
     - name: Instalar dependencias
       run: yarn install
 
+    - name: Forzar actualizar dependencias
+      run: yarn upgrade cliui string-width
+
     - name: Ejecutar pruebas
       run: yarn test
 
