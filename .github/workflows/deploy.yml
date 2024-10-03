@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 20 ]
+        node-version: [ 22 ]
 
     steps:
     - name: Checkout del repositorio
@@ -29,11 +29,6 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         install_components: 'compute'
 
-    - name: Verificar contenido del directorio local
-      run: |
-        pwd
-        ls -la
-
     - name: Crear archivo .env
       run: |
         echo "DOMAIN=${{ secrets.DOMAIN }}" >> .env
@@ -48,6 +43,16 @@ jobs:
         echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
         echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
         cat .env
+
+    - name: Verificar contenido del directorio local
+      run: |
+        pwd
+        ls -la
+        
+
+    - name: Veificar version de Node
+      run: |
+        node --version
 
     - name: Instalar dependencias
       run: yarn install
