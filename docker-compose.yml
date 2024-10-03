@@ -7,7 +7,7 @@ services:
     environment:
       - NODE_ENV=production
     ports:
-      - 85:8090
+      - 85:8085
     depends_on:
       - postgres
       - redis
