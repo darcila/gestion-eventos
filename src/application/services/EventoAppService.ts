@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import 'reflect-metadata';
 import { Result, Response } from '@domain/response';
 import {
+    EventoAsistenteDia,
     EventoAsistentes,
     EventoEntity,
     EventoLugarCercano,
@@ -67,6 +68,10 @@ export class EventoAppService {
         }
         const asistentes = await this.eventoInfraService.consultarAsistentes(id);
         await this.reservaCacheInfraService.setCacheAasistentesCount(id, asistentes);
+        return Result.ok(asistentes);
+    }
+    async asistentesEventos(): Promise<Response<EventoAsistenteDia[] | null>> {
+        const asistentes = await this.eventoInfraService.consultarAsistentesEventos();
         return Result.ok(asistentes);
     }
     private prevalidarCamposEvento(evento: EventoPatchParam): void {

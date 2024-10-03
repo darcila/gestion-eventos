@@ -636,3 +636,47 @@ export const getProcessStatusSchema: FastifySchema = {
         }
     }
 };
+
+export const eventoAsistetesDiaGetSchema: FastifySchema = {
+    description: 'Obtiene el total de asistentes a un evento por dia',
+    tags: ['Evento'],
+    headers: {
+        type: 'object',
+        required: ['Authorization'],
+        properties: {
+            Authorization: {
+                type: 'string',
+                description: 'Token de autenticacion. Formato: Bearer <token>'
+            }
+        }
+    },
+    response: {
+        200: {
+            description: 'Succesful response',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                id: { type: 'string' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        diaSemana: { type: 'string' },
+                        totalAsistentes: { type: 'number' },
+                    }
+                },
+                timestamp: { type: 'string', format: 'date-time' },
+            },
+        },
+        400: {
+            description: 'Bad Request',
+            type: 'object',
+            properties: {
+                isError: { type: 'boolean' },
+                message: { type: 'string' },
+                code: { type: 'string' },
+                statusCode: { type: 'number' },
+                cause: { type: ['string', 'null'] },
+            },
+        },
+    },
+};

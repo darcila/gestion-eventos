@@ -38,3 +38,8 @@ export interface EventoAsistentes {
     hora: string;
     totalAsistentes: number;
 }
+
+export interface EventoAsistenteDia {
+    diaSemana: string;
+    totalAsistentes: number;
+}

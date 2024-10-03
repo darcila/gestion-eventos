@@ -2,7 +2,13 @@ import { injectable } from 'inversify';
 import 'reflect-metadata';
 import {DEPENDENCY_CONTAINER, TYPES} from "@configuration";
 import {EventosRepository} from "@domain/repository";
-import {EventoAsistentes, EventoEntity, EventoLugarCercano, EventoPatchParam} from "@domain/entities";
+import {
+    EventoAsistenteDia,
+    EventoAsistentes,
+    EventoEntity,
+    EventoLugarCercano,
+    EventoPatchParam
+} from "@domain/entities";
 import {MapInfraService} from "@infrastructure/services/MapInfraService";
 import {ReservaInfraService} from "@infrastructure/services/ReservaInfraService";
 
@@ -80,5 +86,12 @@ export class EventoInfraService {
             hora: evento.hora,
             totalAsistentes: total
         };
+    }
+    async consultarAsistentesEventos(): Promise<EventoAsistenteDia[]> {
+        const eventos = await this.eventosRepository.totalAsistenteDia();
+        if (eventos === null) {
+            throw new Error('Error al consultar asistentes');
+        }
+        return eventos;
     }
 }

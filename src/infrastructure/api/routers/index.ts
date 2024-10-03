@@ -5,7 +5,7 @@ import {
     eventoPatch,
     eventoLugarCercano,
     eventoCercano,
-    totalAsistentes, subirEvento, estadoSubirEvento
+    totalAsistentes, subirEvento, estadoSubirEvento, asistentesPorDia
 } from './EventoRouter';
 import {FastifyInstance} from 'fastify';
 import {
@@ -15,7 +15,7 @@ import {
     createReservaSchema,
     deleteAsistenteSchema,
     deleteEventoSchema,
-    deleteReservaSchema,
+    deleteReservaSchema, eventoAsistetesDiaGetSchema,
     eventoAsistetesGetSchema,
     eventoCercanosGetSchema,
     eventoGetSchema,
@@ -46,6 +46,7 @@ export const initRoutes = async (application: FastifyInstance): Promise<void> =>
     application.get(`${pathEvento}/lugares`, { schema: eventoLugaresGetSchema }, eventoLugarCercano);
     application.get(`${pathEvento}/cerca`, { schema: eventoCercanosGetSchema }, eventoCercano);
     application.get(`${pathEvento}/:id/asistentes`, { schema: eventoAsistetesGetSchema }, totalAsistentes);
+    application.get(`${pathEvento}/asistentesdia`, { schema: eventoAsistetesDiaGetSchema }, asistentesPorDia);
     application.post(`${pathEvento}/subir`, { schema: uploadExcelSchema },subirEvento);
     application.get(`${pathEvento}/status/:jobId`, {schema: getProcessStatusSchema}, estadoSubirEvento);
 

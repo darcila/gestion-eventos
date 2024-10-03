@@ -94,4 +94,8 @@ export const subirEvento = async (req: FastifyRequest, reply: FastifyReply): Pro
     }
 }
 
-
+export const asistentesPorDia = async (req:  FastifyRequest, reply: FastifyReply): Promise<FastifyReply | void> => {
+    const eventoService = DEPENDENCY_CONTAINER.get(EventoAppService);
+    const response = await eventoService.asistentesEventos();
+    return reply.send({ ...response, id: req.id });
+};

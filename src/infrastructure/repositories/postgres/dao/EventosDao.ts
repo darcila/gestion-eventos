@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import 'reflect-metadata';
 import {EventosRepository} from "@domain/repository";
-import {EventoEntity, EventoLugarCercano, ResultadoConId} from "@domain/entities";
+import {EventoAsistenteDia, EventoEntity, EventoLugarCercano, ResultadoConId} from "@domain/entities";
 import {DEPENDENCY_CONTAINER, TYPES} from "@configuration";
 import {IDatabase, IMain} from "pg-promise";
 
@@ -62,6 +62,19 @@ export class EventosDao implements EventosRepository {
         } catch (error) {
             console.error('Error al consultar eventos cercanos', error);
             return [];
+        }
+    }
+    async totalAsistenteDia(): Promise<EventoAsistenteDia[] | null> {
+        try {
+            const sql = `SELECT to_char(fecha, 'Day') as diaSemana, count(reserva.cantidad_boletos) as totalAsistentes 
+            FROM evento 
+            JOIN reserva ON evento.id = reserva.evento_id
+            WHERE reserva.estado = 'confirmada' and fecha >= now() - interval '3 months'
+            GROUP BY diaSemana ORDER BY totalAsistentes DESC;`;
+            return await this.db.manyOrNone<EventoAsistenteDia>(sql);
+        } catch (error) {
+            console.error('Error al consultar asistentes por día', error);
+            return null;
         }
     }
 }

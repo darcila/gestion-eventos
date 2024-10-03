@@ -1,4 +1,4 @@
-import {EventoEntity, EventoLugarCercano} from "@domain/entities";
+import {EventoAsistenteDia, EventoEntity, EventoLugarCercano} from "@domain/entities";
 
 export interface EventosRepository {
     guardar(evento: EventoEntity): Promise<number>;
@@ -6,4 +6,5 @@ export interface EventosRepository {
     actualizar(evento: EventoEntity): Promise<number | null | undefined>;
     eliminar(id: number): Promise<number | null | undefined>;
     eventosCercanos(lat: number, lng: number, distancia: number): Promise<EventoLugarCercano[]>;
+    totalAsistenteDia(): Promise<EventoAsistenteDia[] | null>;
 }
