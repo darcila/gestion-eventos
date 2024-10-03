@@ -60,4 +60,41 @@ export const dataAsistenteCreado = {
     timestamp: expect.any(String),
 };
 
+export const dataResponseEvento = {
+    isError: false,
+    id: expect.any(String),
+    data: {
+        id: 2,
+        nombre: 'Evento 2',
+        descripcion: 'Descripcion Evento 2',
+        lugar: 'Parque Simon Bolivar',
+        ciudad: 'Bogota',
+        fecha: '2024-02-01',
+        hora: '10:00:00',
+        valor: 10000,
+        capacidad: 100,
+    },
+    timestamp: expect.any(String),
+};
 
+export const mockEvento = {
+    nombre: 'Evento 5',
+    descripcion: 'Descripcion Evento 5',
+    lugar: 'Carrera 852',
+    ciudad: 'Bogota',
+    fecha: '2024-02-02',
+    hora: '10:00:00',
+    capacidad: 200,
+};
+
+export const eventoCreado = {
+    id: 1,
+    ...mockEvento
+}
+
+export const dataResponseEventoCreado = {
+    isError: false,
+    id: expect.any(String),
+    data: eventoCreado,
+    timestamp: expect.any(String),
+};

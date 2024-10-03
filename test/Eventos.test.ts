@@ -3,26 +3,25 @@ import {createDependencyContainer, DEPENDENCY_CONTAINER, TYPES} from "@configura
 import {
     connectDB,
     consulta,
-    dataAsistenteCreado,
-    dataResponseAsistente,
+    dataResponseEvento, dataResponseEventoCreado,
     dbEventos,
-    mockAsistente,
+    mockEvento,
     usuarioAuth
 } from "./data";
 import {IDatabase, IMain} from "pg-promise";
 import {MapApiClientRepository} from "@domain/repository";
-import {application} from "@infrastructure/api/Application";
 import {MapApiClientFakeRepository} from "./__moks__";
 import {AutenticacionAppService} from "./__moks__/AutenticationServiceMock";
 import {validarJWT} from "@domain/services";
-//import process from "process";
+import {application} from "@infrastructure/api/Application";
+
 jest.mock('@domain/services/TokenDomainServices');
 
 export const mockAutenticarService = {
     validarToken: jest.fn()
 };
 
-describe('AsistenteAppService', () => {
+describe('EventosAppService', () => {
     beforeAll(() => {
 
         if (DEPENDENCY_CONTAINER) {
@@ -41,20 +40,18 @@ describe('AsistenteAppService', () => {
             usuario: usuarioAuth.usuario,
             correo: usuarioAuth.correo,
         });
+
         const response = await application.inject({
             method: 'GET',
             headers: {authorization: 'Bearer token'},
-            url: `${consulta}/asistente/12345679`,
+            url: `${consulta}/evento/2`,
         });
         const bodyResponse = JSON.parse(response.body);
         expect(response.statusCode).toBe(200);
-        expect(bodyResponse).toEqual(dataResponseAsistente);
-    });
-    afterAll(() => {
-        application.close();
+        expect(bodyResponse).toEqual(dataResponseEvento);
     });
 
-    it('Asistente Crear ', async () => {
+    it('Evento Crear ', async () => {
         (validarJWT as jest.Mock).mockReturnValue({
             id: usuarioAuth.id,
             usuario: usuarioAuth.usuario,
@@ -63,12 +60,11 @@ describe('AsistenteAppService', () => {
         const response = await application.inject({
             method: 'POST',
             headers: {authorization: 'Bearer token'},
-            url: `${consulta}/asistente`,
-            body: mockAsistente,
+            url: `${consulta}/evento`,
+            body: mockEvento,
         });
         const bodyResponse = JSON.parse(response.body);
         expect(response.statusCode).toBe(200);
-        expect(bodyResponse).toEqual(dataAsistenteCreado);
+        expect(bodyResponse).toEqual(dataResponseEventoCreado);
     });
-
 });

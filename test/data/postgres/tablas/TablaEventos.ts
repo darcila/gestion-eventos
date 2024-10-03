@@ -6,6 +6,7 @@ export const tablaEventos = {
                 id SERIAL PRIMARY KEY,
                 nombre TEXT,
                 descripcion TEXT,
+                lugar TEXT,
                 ciudad TEXT,
                 fecha DATE,
                 hora TIME,

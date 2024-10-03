@@ -4,14 +4,14 @@ import {tablaAsistentes, tablaEventos, tablaReservas, tablaUsuarios} from "../ta
 export const dbEventos = (db?: IMemoryDb) => {
     const dbmem = db ?? newDb();
     tablaReservas.crearTablaReservas(dbmem);
-    dbmem.public.none(`INSERT INTO reserva VALUES (4, 1, 1, '2024-02-02', 2, 'CREADA');`);
+    dbmem.public.none(`INSERT INTO reserva VALUES (4, 4, 4, '2024-02-02', 2, 'CREADA');`);
     dbmem.public.none(`INSERT INTO reserva VALUES (2, 2, 2, '2024-02-02', 1, 'CREADA');`);
     dbmem.public.none(`INSERT INTO reserva VALUES (3, 3, 3, '2024-02-02', 1, 'CREADA');`);
 
     tablaEventos.crearTablaEventos(dbmem);
-    dbmem.public.none(`INSERT INTO evento VALUES (1, 'Evento 1', 'Descripcion Evento 1', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
-    dbmem.public.none(`INSERT INTO evento VALUES (2, 'Evento 2', 'Descripcion Evento 2', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
-    dbmem.public.none(`INSERT INTO evento VALUES (3, 'Evento 3', 'Descripcion Evento 3', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
+    dbmem.public.none(`INSERT INTO evento VALUES (4, 'Evento 1', 'Descripcion Evento 1', 'Calle 123', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
+    dbmem.public.none(`INSERT INTO evento VALUES (2, 'Evento 2', 'Descripcion Evento 2', 'Parque Simon Bolivar', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
+    dbmem.public.none(`INSERT INTO evento VALUES (3, 'Evento 3', 'Descripcion Evento 3', 'Carrera 852', 'Bogota', '2024-02-02', '10:00:00', 'Categoria 1', 100, 10000, '(4.60971, -74.08175)', 'CREADO', '2024-02-02', null, null);`);
 
     tablaAsistentes.crearTablaAsistentes(dbmem);
     dbmem.public.none(`INSERT INTO asistente VALUES (4, '12345679', 'Asistente 1', 'Direccion 1', '12345678911', 'asistente1@mail.com', 'Bogota', '(4.60971, -74.08175)', null, null, null);`);
