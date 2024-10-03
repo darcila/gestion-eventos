@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">21.73% </span>
+                <span class="strong">39.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/46</span>
+                <span class='fraction'>18/46</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>3/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/44</span>
+                <span class='fraction'>16/44</span>
             </div>
         
             
@@ -145,37 +145,37 @@
 <a name='L80'></a><a href='#L80'>80</a>
 <a name='L81'></a><a href='#L81'>81</a>
 <a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L83'></a><a href='#L83'>83</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -245,19 +245,19 @@ import {Ubicacion} from "@domain/entities/MapEntity";
 import {ReservaCacheInfraService} from "@infrastructure/services/ReservaCacheInfraService";
 &nbsp;
 @injectable()
-export <span class="fstat-no" title="function not covered" >class E</span>ventoAppService {
-    private <span class="cstat-no" title="statement not covered" >eventoInfraService = DEPENDENCY_CONTAINER.get(EventoInfraService);</span>
-    private <span class="cstat-no" title="statement not covered" >mapInfraService = DEPENDENCY_CONTAINER.get(MapInfraService);</span>
-    private <span class="cstat-no" title="statement not covered" >reservaCacheInfraService = DEPENDENCY_CONTAINER.get(ReservaCacheInfraService);</span>
+export class EventoAppService {
+    private eventoInfraService = DEPENDENCY_CONTAINER.get(EventoInfraService);
+    private mapInfraService = DEPENDENCY_CONTAINER.get(MapInfraService);
+    private reservaCacheInfraService = DEPENDENCY_CONTAINER.get(ReservaCacheInfraService);
 &nbsp;
-<span class="fstat-no" title="function not covered" >    async </span>getEvento(id: number): Promise&lt;Response&lt;EventoEntity | null&gt;&gt; {
-        const result = <span class="cstat-no" title="statement not covered" >await this.eventoInfraService.consultar(id);</span>
-<span class="cstat-no" title="statement not covered" >        return Result.ok(result);</span>
+    async getEvento(id: number): Promise&lt;Response&lt;EventoEntity | null&gt;&gt; {
+        const result = await this.eventoInfraService.consultar(id);
+        return Result.ok(result);
     }
-<span class="fstat-no" title="function not covered" >    async </span>postEvento(evento: EventoPostParam): Promise&lt;Response&lt;EventoEntity | null&gt;&gt; {
-        const eventoEntity = <span class="cstat-no" title="statement not covered" >EventoEntity.create(evento.nombre, evento.descripcion, evento.lugar, evento.ciudad, evento.fecha, evento.hora, evento.categoria, evento.capacidad, evento.valor);</span>
-<span class="cstat-no" title="statement not covered" >        eventoEntity.id = await this.eventoInfraService.guardar(eventoEntity);</span>
-<span class="cstat-no" title="statement not covered" >        return Result.ok(eventoEntity);</span>
+    async postEvento(evento: EventoPostParam): Promise&lt;Response&lt;EventoEntity | null&gt;&gt; {
+        const eventoEntity = EventoEntity.create(evento.nombre, evento.descripcion, evento.lugar, evento.ciudad, evento.fecha, evento.hora, evento.categoria, evento.capacidad, evento.valor);
+        eventoEntity.id = await this.eventoInfraService.guardar(eventoEntity);
+        return Result.ok(eventoEntity);
     }
 <span class="fstat-no" title="function not covered" >    async </span>patchEvento(evento: EventoPatchParam): Promise&lt;Response&lt;EventoEntity | null&gt;&gt; {
 <span class="cstat-no" title="statement not covered" >        this.prevalidarCamposEvento(evento);</span>
@@ -316,7 +316,7 @@ export <span class="fstat-no" title="function not covered" >class E</span>ventoA
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-02T21:25:32.298Z
+                at 2024-10-03T03:12:33.393Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

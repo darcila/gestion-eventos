@@ -98,3 +98,25 @@ export const dataResponseEventoCreado = {
     data: eventoCreado,
     timestamp: expect.any(String),
 };
+
+export const datoResponseReserva = {
+    isError: false,
+    id: expect.any(String),
+    data: {
+        id: 4,
+        asistente_id: 4,
+        evento_id: 4,
+        cantidad_boletos: 2,
+        estado: 'CREADA',
+    },
+    timestamp: expect.any(String),
+};
+
+export const respuestaReservaBorrar = {
+    isError: false,
+    id: expect.any(String),
+    data: {
+        mensaje: "Reserva eliminada",
+    },
+    timestamp: expect.any(String),
+};
