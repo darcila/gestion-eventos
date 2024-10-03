@@ -24,6 +24,9 @@ export const swaggerUi_config = {
         docExpansion: 'none', // Opcional, ajusta la UI
         deepLinking: false,
     },
+    swaggerUiOptions: {
+        url: 'http://34.69.101.106:85/docs/json', // Forzar la URL base con HTTP
+    },
     staticCSP: true,
     transformStaticCSP: (header: string) => header,
 };
