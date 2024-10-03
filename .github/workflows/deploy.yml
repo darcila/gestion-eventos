@@ -29,6 +29,27 @@ jobs:
         pwd
         ls -la
 
+    - name: Crear archivo .env
+      run: |
+        echo "DOMAIN=${{ secrets.DOMAIN }}" >> .env
+        echo "SERVICE_NAME=${{ secrets.SERVICE_NAME }}" >> .env
+        echo "KEY_MAPBOX=${{ secrets.KEY_MAPBOX }}" >> .env
+        echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
+        echo "POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }}" >> .env
+        echo "KEY_JWT=${{ secrets.KEY_JWT }}" >> .env
+        echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+        echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
+        cat .env
+
+    - name: Instalar dependencias
+      run: yarn install
+
+    - name: Ejecutar pruebas
+      run: yarn test
+
     - name: Copiar archivos a la instancia de GCE
       run: |
         gcloud compute scp --recurse /home/runner/work/gestion-eventos/gestion-eventos diego_arcila@test-senior:/home/diego_arcila/proyectos --zone=us-central1-a
