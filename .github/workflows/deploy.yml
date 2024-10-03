@@ -15,8 +15,11 @@ jobs:
     steps:
     - name: Checkout del repositorio
       uses: actions/checkout@v3
+
+    - name: Configurar la versión de Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: ${{ matrix.node-version }}
 
     - name: Autenticar en Google Cloud
       uses: google-github-actions/auth@v1
